@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1127</width>
+    <height>682</height>
+   </rect>
+  </property>
+  <property name="palette">
+   <palette>
+    <active>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>229</red>
+        <green>240</green>
+        <blue>249</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>229</red>
+        <green>240</green>
+        <blue>249</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>229</red>
+        <green>240</green>
+        <blue>249</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </active>
+    <inactive>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>229</red>
+        <green>240</green>
+        <blue>249</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>229</red>
+        <green>240</green>
+        <blue>249</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>229</red>
+        <green>240</green>
+        <blue>249</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </inactive>
+    <disabled>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>229</red>
+        <green>240</green>
+        <blue>249</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>229</red>
+        <green>240</green>
+        <blue>249</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>229</red>
+        <green>240</green>
+        <blue>249</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </disabled>
+   </palette>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(229, 240, 249);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="menu">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>287</width>
+      <height>682</height>
+     </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Light">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>20</green>
+          <blue>252</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Light">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>20</green>
+          <blue>252</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Light">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>20</green>
+          <blue>252</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);
+border: 2px solid rgb(177, 206, 240);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QFrame" name="menubase">
+     <property name="geometry">
+      <rect>
+       <x>17</x>
+       <y>448</y>
+       <width>253</width>
+       <height>194</height>
+      </rect>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border: 2px solid rgb(177, 206, 240);</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QFrame" name="guidefrm">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>253</width>
+        <height>58</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QLabel" name="guidelbl">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>15</y>
+         <width>228</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>Выберите конфигурацию!</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="startBtn">
+      <property name="geometry">
+       <rect>
+        <x>24</x>
+        <y>137</y>
+        <width>205</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(103, 169, 237);
+color: rgb(255, 255, 255)</string>
+      </property>
+      <property name="text">
+       <string>Начать парсинг</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>211</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Количество страниц:
+(1 страница = 100 запросов)</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>174</x>
+        <y>76</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(229, 240, 249);</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="configfrm">
+    <property name="geometry">
+     <rect>
+      <x>325</x>
+      <y>40</y>
+      <width>253</width>
+      <height>205</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);
+border: 2px solid rgb(177, 206, 240);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QTreeWidget" name="configshow">
+     <property name="geometry">
+      <rect>
+       <x>18</x>
+       <y>45</y>
+       <width>217</width>
+       <height>139</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>Ключ</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Значение</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>18</x>
+       <y>10</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Конфигурация:</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="exportfrm">
+    <property name="geometry">
+     <rect>
+      <x>611</x>
+      <y>371</y>
+      <width>481</width>
+      <height>267</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);
+border: 2px solid rgb(177, 206, 240);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QFrame" name="buttonfrm">
+     <property name="geometry">
+      <rect>
+       <x>14</x>
+       <y>216</y>
+       <width>449</width>
+       <height>35</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(229, 240, 249);</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QPushButton" name="renameBtn">
+      <property name="geometry">
+       <rect>
+        <x>215</x>
+        <y>7</y>
+        <width>105</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>7</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(103, 169, 237);
+color: rgb(255, 255, 255)</string>
+      </property>
+      <property name="text">
+       <string>Переименовать</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="deleteBtn">
+      <property name="geometry">
+       <rect>
+        <x>333</x>
+        <y>7</y>
+        <width>75</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>7</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(103, 169, 237);
+color: rgb(255, 255, 255)</string>
+      </property>
+      <property name="text">
+       <string>Удалить</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>14</x>
+       <y>10</y>
+       <width>351</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Экспортированные файлы:</string>
+     </property>
+    </widget>
+    <widget class="QTreeWidget" name="exportbox">
+     <property name="geometry">
+      <rect>
+       <x>14</x>
+       <y>45</y>
+       <width>449</width>
+       <height>171</height>
+      </rect>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <property name="dragEnabled">
+      <bool>true</bool>
+     </property>
+     <column>
+      <property name="text">
+       <string>Имя</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Кол-во записей</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Размер файла</string>
+      </property>
+     </column>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="configFullListfrm">
+    <property name="geometry">
+     <rect>
+      <x>325</x>
+      <y>279</y>
+      <width>253</width>
+      <height>363</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);
+border: 2px solid rgb(177, 206, 240);
+</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QTreeWidget" name="configFullListbox">
+     <property name="geometry">
+      <rect>
+       <x>18</x>
+       <y>46</y>
+       <width>217</width>
+       <height>245</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>Имя</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Последний парсинг</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>18</x>
+       <y>10</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>История:</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="managerBtn">
+     <property name="geometry">
+      <rect>
+       <x>24</x>
+       <y>315</y>
+       <width>205</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(103, 169, 237);
+color: rgb(255, 255, 255)</string>
+     </property>
+     <property name="text">
+      <string>Открыть менеджер конфигураций</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="previewfrm">
+    <property name="geometry">
+     <rect>
+      <x>611</x>
+      <y>40</y>
+      <width>481</width>
+      <height>285</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);
+border: 2px solid rgb(177, 206, 240);
+</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>14</x>
+       <y>10</y>
+       <width>171</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-color: rgb(255, 255, 255);
+</string>
+     </property>
+     <property name="text">
+      <string>Предпросмотр:</string>
+     </property>
+    </widget>
+    <widget class="QFrame" name="frame">
+     <property name="geometry">
+      <rect>
+       <x>14</x>
+       <y>236</y>
+       <width>449</width>
+       <height>35</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(229, 240, 249);</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QPushButton" name="expandedBtn">
+      <property name="geometry">
+       <rect>
+        <x>215</x>
+        <y>7</y>
+        <width>193</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>7</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(103, 169, 237);
+color: rgb(255, 255, 255)</string>
+      </property>
+      <property name="text">
+       <string>Расширенный предпросмотр</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QTreeWidget" name="previewShowbox">
+     <property name="geometry">
+      <rect>
+       <x>14</x>
+       <y>45</y>
+       <width>449</width>
+       <height>193</height>
+      </rect>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <property name="dragEnabled">
+      <bool>true</bool>
+     </property>
+     <column>
+      <property name="text">
+       <string>Пользователь</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Сообщение</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Время</string>
+      </property>
+     </column>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
