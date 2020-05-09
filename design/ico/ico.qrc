@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="visual">
+    <file>badge.png</file>
+  </qresource>
+</RCC>
