@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import datetime
-import parserFunc as p
+from parsing import parserFunc as p
 import itertools
 import pandas as pd
 

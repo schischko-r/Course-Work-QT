@@ -1,8 +1,8 @@
 import sys
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5 import Qt
 
-from ConfigDesigner import *
+from designer import ConfigDesigner
 
 import configparser
 import datetime
@@ -10,7 +10,7 @@ import glob
 import os
 
 
-class ConfigWin(QtWidgets.QDialog, Ui_CfgWindow):
+class ConfigWin(QtWidgets.QDialog, ConfigDesigner.Ui_ConfigWin):
     def __init__(self, parent=None):
         super(ConfigWin, self).__init__()
         self.setupUi(self)

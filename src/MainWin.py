@@ -2,10 +2,11 @@ import sys
 from PyQt5 import QtWidgets
 from PyQt5 import Qt
 
-from MainDesigner import *
-from ConfigWin import *
+from designer import MainDesigner
+from ConfigWin import ConfigWin
+from RenameWin import RenameWin
 
-import parserMain
+from parsing import parserMain
 
 import configparser
 import threading
@@ -16,7 +17,7 @@ import math
 import os
 
 
-class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -29,6 +30,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.expandedBtn.clicked.connect(self.openPreview)
 
         self.exportbox.itemClicked.connect(self.preview)
+        self.configFullListbox.itemClicked.connect(self.loadfromHst)
 
     def openmanager(self):
         self.PATH = ""
@@ -150,15 +152,37 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.populateExport()
 
     def deleteExport(self):
-        pass
+        for item in self.exportbox.selectedItems():
+            filepath = os.path.abspath(os.path.join(os.path.dirname(
+                "__file__"),  'export')) + "\\" + item.text(0) + ".csv"
+            if os.path.exists(filepath):
+                os.remove(filepath)
+            else:
+                print("The file does not exist")
+        self.populateExport()
 
     def renameExport(self):
-        pass
+        rename = RenameWin()
+        if rename.exec_():
+            try:
+                self.newName = os.path.abspath(os.path.join(os.path.dirname(
+                    "__file__"),  'export')) + "\\" + rename.text
+                current = os.path.abspath(os.path.join(os.path.dirname(
+                    "__file__"),  'export')) + "\\" + self.exportbox.selectedItems()[0].text(0) + ".csv"
+                os.rename(current, self.newName)
+                self.populateExport()
+                self.previewShowbox.clear()
+            except:
+                messagebox.showinfo(
+                    "Внимание!", "Ошибка!")
 
     def openPreview(self):
         pass
 
     def preview(self):
+        pass
+
+    def loadfromHst(self):
         pass
 
     def deltatime(self, time):
