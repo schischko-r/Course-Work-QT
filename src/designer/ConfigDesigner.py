@@ -331,11 +331,11 @@ class Ui_ConfigWin(object):
         self.newConfigBtn.setStyleSheet("background-color: rgb(103, 169, 237);\n"
 "color: rgb(255, 255, 255)")
         self.newConfigBtn.setObjectName("newConfigBtn")
-        self.saveConfigBtn = QtWidgets.QPushButton(self.frame_3)
-        self.saveConfigBtn.setGeometry(QtCore.QRect(213, 15, 180, 32))
-        self.saveConfigBtn.setStyleSheet("background-color: rgb(103, 169, 237);\n"
+        self.renameConfigBtn = QtWidgets.QPushButton(self.frame_3)
+        self.renameConfigBtn.setGeometry(QtCore.QRect(213, 15, 180, 32))
+        self.renameConfigBtn.setStyleSheet("background-color: rgb(103, 169, 237);\n"
 "color: rgb(255, 255, 255)")
-        self.saveConfigBtn.setObjectName("saveConfigBtn")
+        self.renameConfigBtn.setObjectName("renameConfigBtn")
         self.delConfigBtn = QtWidgets.QPushButton(self.frame_3)
         self.delConfigBtn.setGeometry(QtCore.QRect(407, 15, 180, 32))
         self.delConfigBtn.setStyleSheet("background-color: rgb(103, 169, 237);\n"
@@ -579,7 +579,7 @@ class Ui_ConfigWin(object):
         self.tdayMenu.setItemText(29, _translate("ConfigWin", "30"))
         self.tdayMenu.setItemText(30, _translate("ConfigWin", "31"))
         self.newConfigBtn.setText(_translate("ConfigWin", "Новая"))
-        self.saveConfigBtn.setText(_translate("ConfigWin", "Сохранить"))
+        self.renameConfigBtn.setText(_translate("ConfigWin", "Переименовать"))
         self.delConfigBtn.setText(_translate("ConfigWin", "Удалить"))
         self.useConfigBtn.setText(_translate("ConfigWin", "Использовать"))
         self.tmonthMenu.setItemText(0, _translate("ConfigWin", "Янв"))

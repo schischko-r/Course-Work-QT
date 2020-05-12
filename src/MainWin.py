@@ -1,6 +1,5 @@
 import sys
-from PyQt5 import QtWidgets
-from PyQt5 import Qt
+from PyQt5 import QtWidgets, Qt, QtCore
 
 from designer import MainDesigner
 from ConfigWin import ConfigWin
@@ -134,19 +133,30 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         filename = self.cfgPATH.split("\\")
         filename = filename[len(filename) - 1].split('.')[0]
         configDict = config._sections['config']
-        text, topic, strtDate, endDate, author, adressed, expanded = configDict['text'], configDict[
+        self.ctext, self.ctopic, self.cstrtDate, self.cendDate, self.cauthor, self.cadressed, self.cexpanded = configDict['text'], configDict[
             'topic'], configDict['fdate'], configDict['tdate'],  configDict['author'],  configDict['receiver'], configDict['expanded']
 
-        RECWRITING = threading.Thread(target=parserMain.create_record, args=(
-            int(maxPage), topic, text, strtDate, endDate, author, adressed, str(expanded)))
-        RECWRITING.start()
-        RECWRITING.join()
+        self.parser = parserMain.Parser(
+            int(maxPage), self.ctopic, self.ctext, self.cstrtDate, self.cendDate, self.cauthor, self.cadressed, str(self.cexpanded))
+        self.parser.progress.connect(self.moveprogress)
+        self.parser.done.connect(self.complete)
+        self.parser.start()
 
+        # RECWRITING = threading.Thread(target=parserMain.create_record, args=(
+        #     int(maxPage), topic, text, strtDate, endDate, author, adressed, str(expanded)
+        #     int(maxPage), topic, text, strtDate, endDate, author, adressed, str(expanded)))
+        # RECWRITING.start()
+        # RECWRITING.join()
+
+    def moveprogress(self, value):
+        print(value)
+
+    def complete(self, done):
         config = configparser.ConfigParser()
         config.read(self.cfgPATH, encoding='utf-8-sig')
         last_used = f"{datetime.datetime.now():%Y-%m-%d %H:%M:%S}"
-        config['config'] = {'text': text, 'author': author,
-                            'receiver': adressed, 'topic': topic, 'fdate': strtDate, 'tdate': endDate, 'last_used': last_used, 'expanded': expanded}
+        config['config'] = {'text': self.ctext, 'author': self.cauthor,
+                            'receiver': self.cadressed, 'topic': self.ctopic, 'fdate': self.cstrtDate, 'tdate': self.cendDate, 'last_used': last_used, 'expanded': self.cexpanded}
         with open(self.cfgPATH, "w", encoding='utf-8-sig') as configfile:
             config.write(configfile)
         self.populateExport()
@@ -162,19 +172,19 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         self.populateExport()
 
     def renameExport(self):
-        rename = RenameWin()
+        rename = RenameWin(self.exportbox.selectedItems()[0].text(0))
         if rename.exec_():
             try:
                 self.newName = os.path.abspath(os.path.join(os.path.dirname(
-                    "__file__"),  'export')) + "\\" + rename.text
+                    "__file__"),  'export')) + "\\" + rename.text + ".csv"
                 current = os.path.abspath(os.path.join(os.path.dirname(
                     "__file__"),  'export')) + "\\" + self.exportbox.selectedItems()[0].text(0) + ".csv"
                 os.rename(current, self.newName)
                 self.populateExport()
                 self.previewShowbox.clear()
             except:
-                messagebox.showinfo(
-                    "Внимание!", "Ошибка!")
+                QtWidgets.QMessageBox.about(
+                    self, "Внимание!", "Некорректное имя!")
 
     def openPreview(self):
         pass

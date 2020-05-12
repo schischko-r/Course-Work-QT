@@ -3,6 +3,7 @@ from PyQt5 import QtWidgets, QtCore
 from PyQt5 import Qt
 
 from designer import ConfigDesigner
+from RenameWin import RenameWin
 
 import configparser
 import datetime
@@ -16,7 +17,7 @@ class ConfigWin(QtWidgets.QDialog, ConfigDesigner.Ui_ConfigWin):
         self.setupUi(self)
         self.configbox.itemClicked.connect(self.onItemClicked)
         self.newConfigBtn.clicked.connect(self.newConfig)
-        self.saveConfigBtn.clicked.connect(self.saveConfig)
+        self.renameConfigBtn.clicked.connect(self.renameConfig)
         self.delConfigBtn.clicked.connect(self.delConfig)
         self.useConfigBtn.clicked.connect(self.useConfig)
 
@@ -149,6 +150,22 @@ class ConfigWin(QtWidgets.QDialog, ConfigDesigner.Ui_ConfigWin):
             self.savedflag = 1
             self.populateConfig()
 
+    def useConfig(self):
+        self.saveConfig()
+        if self.savedflag == 1:
+
+            try:
+                self.PATH = os.path.abspath(os.path.join(os.path.dirname(
+                    "__file__"), 'config')) + "\\" + str(self.nameEntry.text()) + ".ini"
+                self.accept()
+                self.close()
+            except:
+                QtWidgets.QMessageBox.about(
+                    self, "Error!", "Непредвиденная ошибка!")
+                return
+        else:
+            pass
+
     def delConfig(self):
         name = self.nameEntry.text()
 
@@ -169,21 +186,19 @@ class ConfigWin(QtWidgets.QDialog, ConfigDesigner.Ui_ConfigWin):
             print("The file does not exist")
         self.populateConfig()
 
-    def useConfig(self):
-        self.saveConfig()
-        if self.savedflag == 1:
-
+    def renameConfig(self):
+        rename = RenameWin(initName=self.configbox.selectedItems()[0].text(0))
+        if rename.exec_():
             try:
-                self.PATH = os.path.abspath(os.path.join(os.path.dirname(
-                    "__file__"), 'config')) + "\\" + str(self.nameEntry.text()) + ".ini"
-                self.accept()
-                self.close()
+                self.newName = os.path.abspath(os.path.join(os.path.dirname(
+                    "__file__"),  'config')) + "\\" + rename.text + ".ini"
+                current = os.path.abspath(os.path.join(os.path.dirname(
+                    "__file__"),  'config')) + "\\" + self.configbox.selectedItems()[0].text(0) + ".ini"
+                os.rename(current, self.newName)
+                self.populateConfig()
             except:
                 QtWidgets.QMessageBox.about(
-                    self, "Error!", "Непредвиденная ошибка!")
-                return
-        else:
-            pass
+                    self, "Внимание!", "Файл с таким именем уже существует!")
 
     def populateConfig(self):
         self.configbox.clear()

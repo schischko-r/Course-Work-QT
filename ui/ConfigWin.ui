@@ -1134,7 +1134,7 @@ color: rgb(255, 255, 255)</string>
       <string>Новая</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="saveConfigBtn">
+    <widget class="QPushButton" name="renameConfigBtn">
      <property name="geometry">
       <rect>
        <x>213</x>
@@ -1148,7 +1148,7 @@ color: rgb(255, 255, 255)</string>
 color: rgb(255, 255, 255)</string>
      </property>
      <property name="text">
-      <string>Сохранить</string>
+      <string>Переименовать</string>
      </property>
     </widget>
     <widget class="QPushButton" name="delConfigBtn">
