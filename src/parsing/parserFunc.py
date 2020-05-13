@@ -18,7 +18,7 @@ TO = '&to='                                                  # ПОСЛЕДНЯ�
 WIDE = '&wide='
 
 
-def load_url(text, topic, strtDate, endDate, page, author, adressed, expanded, session):
+def load_url(page, text, topic, strtDate, endDate, author, adressed, expanded, session):
     [fday, fmonth, fyear] = strtDate.split("-")
     [tday, tmonth, tyear] = endDate.split("-")
 

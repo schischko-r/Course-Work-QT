@@ -371,7 +371,7 @@ color: rgb(255, 255, 255)</string>
       </property>
       <property name="text">
        <string>Количество страниц:
-(1 страница = 100 запросов)</string>
+(1 страница ≈ 100 запросов)</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="lineEdit">
@@ -858,8 +858,6 @@ color: rgb(255, 255, 255)</string>
    </widget>
   </widget>
  </widget>
- <resources>
-  <include location="../design/ico/ico.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

@@ -4,15 +4,16 @@ from PyQt5 import QtWidgets, Qt, QtCore
 from designer import MainDesigner
 from ConfigWin import ConfigWin
 from RenameWin import RenameWin
+from PreviewWin import PreviewWin
 
 from parsing import parserMain
 
 import configparser
-import threading
 import requests
 import datetime
 import glob
 import math
+import csv
 import os
 
 
@@ -52,7 +53,8 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
                         values = (cfgtitle, cfgvalue)
                         for i in range(len(values)):
                             item.setText(i, values[i])
-                self.configshow.resizeColumnToContents(0)
+                for i in range(self.configshow.columnCount()):
+                    self.configshow.resizeColumnToContents(i)
                 self.guidelbl.setText("Выбрано успешно!")
             except:
                 QtWidgets.QMessageBox.about(
@@ -90,6 +92,9 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
             for i in range(len(values)):
                 item.setText(i, str(values[i]))
 
+        for i in range(self.exportbox.columnCount()):
+            self.exportbox.resizeColumnToContents(i)
+
         path = os.path.abspath(os.path.join(
             os.path.dirname("__file__"), 'config'))
 
@@ -109,7 +114,11 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
             for i in range(len(values)):
                 item.setText(i, values[i])
 
+        for i in range(self.configFullListbox.columnCount()):
+            self.configFullListbox.resizeColumnToContents(i)
+
     def startParsing(self):
+        print("DEBUG: CONNECTING...")
         try:
             r = requests.head("https://vif2ne.org/")
             pass
@@ -117,6 +126,7 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
             QtWidgets.QMessageBox.about(
                 self, "Внимание!", "Проверьте ваше подключение к интернету и доступность сайта")
             return
+        print("DEBUG: CONNECTION SUCCESSFUL")
 
         if self.configshow.topLevelItemCount() == 0:
             QtWidgets.QMessageBox.about(
@@ -136,20 +146,16 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         self.ctext, self.ctopic, self.cstrtDate, self.cendDate, self.cauthor, self.cadressed, self.cexpanded = configDict['text'], configDict[
             'topic'], configDict['fdate'], configDict['tdate'],  configDict['author'],  configDict['receiver'], configDict['expanded']
 
+        print("DEBUG: CFG READ SUCCESSFUL")
         self.parser = parserMain.Parser(
             int(maxPage), self.ctopic, self.ctext, self.cstrtDate, self.cendDate, self.cauthor, self.cadressed, str(self.cexpanded))
         self.parser.progress.connect(self.moveprogress)
         self.parser.done.connect(self.complete)
         self.parser.start()
-
-        # RECWRITING = threading.Thread(target=parserMain.create_record, args=(
-        #     int(maxPage), topic, text, strtDate, endDate, author, adressed, str(expanded)
-        #     int(maxPage), topic, text, strtDate, endDate, author, adressed, str(expanded)))
-        # RECWRITING.start()
-        # RECWRITING.join()
+        print("DEBUG: PARSING STARTED")
 
     def moveprogress(self, value):
-        print(value)
+        print(f"DEBUG: PARSING STAGE {value}")
 
     def complete(self, done):
         config = configparser.ConfigParser()
@@ -159,7 +165,10 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
                             'receiver': self.cadressed, 'topic': self.ctopic, 'fdate': self.cstrtDate, 'tdate': self.cendDate, 'last_used': last_used, 'expanded': self.cexpanded}
         with open(self.cfgPATH, "w", encoding='utf-8-sig') as configfile:
             config.write(configfile)
+        QtWidgets.QMessageBox.about(
+            self, "Успешно!", "Парсинг окончен!")
         self.populateExport()
+        print("DEBUG: PARSING COMPLETE")
 
     def deleteExport(self):
         for item in self.exportbox.selectedItems():
@@ -172,11 +181,11 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         self.populateExport()
 
     def renameExport(self):
-        rename = RenameWin(self.exportbox.selectedItems()[0].text(0))
-        if rename.exec_():
+        renameWin = RenameWin(self.exportbox.selectedItems()[0].text(0))
+        if renameWin.exec_():
             try:
                 self.newName = os.path.abspath(os.path.join(os.path.dirname(
-                    "__file__"),  'export')) + "\\" + rename.text + ".csv"
+                    "__file__"),  'export')) + "\\" + renameWin.text + ".csv"
                 current = os.path.abspath(os.path.join(os.path.dirname(
                     "__file__"),  'export')) + "\\" + self.exportbox.selectedItems()[0].text(0) + ".csv"
                 os.rename(current, self.newName)
@@ -187,13 +196,53 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
                     self, "Внимание!", "Некорректное имя!")
 
     def openPreview(self):
-        pass
+        previewWin = PreviewWin(os.path.abspath(os.path.join(os.path.dirname(
+            "__file__"),  'export')) + "\\" + self.exportbox.selectedItems()[0].text(0) + ".csv")
+        if previewWin.exec_():
+            pass
 
-    def preview(self):
-        pass
+    def preview(self, it, colf):
+        self.previewShowbox.clear()
+        filepath = os.path.abspath(os.path.join(os.path.dirname(
+            "__file__"), 'export')) + "\\" + str(it.text(0)) + ".csv"
+        with open(filepath, encoding='utf-8-sig') as f:
+            reader = csv.DictReader(f, delimiter=',')
+            for row in reader:
+                item = QtWidgets.QTreeWidgetItem(self.previewShowbox)
+                values = (row['name'], row['msg'], row['time'])
+                for i in range(len(values)):
+                    item.setText(i, values[i])
+        for i in range(self.previewShowbox.columnCount()):
+            self.previewShowbox.resizeColumnToContents(i)
 
-    def loadfromHst(self):
-        pass
+    def loadfromHst(self, it, col):
+        self.cfgPATH = os.path.abspath(os.path.join(os.path.dirname(
+            "__file__"), 'config')) + "\\" + str(it.text(0)) + ".ini"
+        try:
+            with open(self.cfgPATH, encoding='utf-8-sig') as f:
+                lines = f.readlines()
+
+            self.configshow.clear()
+            for line in lines[1:]:
+                if line != "":
+                    cfgtitle = line.split(" = ")[0]
+                    try:
+                        cfgvalue = line.split(" = ")[1]
+                    except:
+                        cfgvalue = ""
+                    item = QtWidgets.QTreeWidgetItem(self.configshow)
+                    values = (cfgtitle, cfgvalue)
+                    for i in range(len(values)):
+                        item.setText(i, values[i])
+            for i in range(self.configshow.columnCount()):
+                self.configshow.resizeColumnToContents(i)
+            self.guidelbl.setText("Выбрано успешно!")
+
+        except:
+            QtWidgets.QMessageBox.about(
+                self, "Внимание!", "Конфигурация не выбрана!")
+
+        self.populateExport()
 
     def deltatime(self, time):
         zerotimeNow = datetime.datetime.now().replace(

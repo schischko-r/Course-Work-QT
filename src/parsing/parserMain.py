@@ -37,8 +37,8 @@ class Parser(QtCore.QThread):
         records = []
 
         while page < self.maxPage:
-            data = p.load_url(self.text, self.topic, self.strtDate, self.endDate,
-                              page, self.author, self.adressed, self.expanded, s)
+            data = p.load_url(page, self.text, self.topic, self.strtDate, self.endDate,
+                              self.author, self.adressed, self.expanded, s)
             if p.contain_forum_data(data):
                 soup = BeautifulSoup(data, 'html.parser')
                 if self.expanded == "False":

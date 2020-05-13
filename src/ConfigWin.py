@@ -16,6 +16,7 @@ class ConfigWin(QtWidgets.QDialog, ConfigDesigner.Ui_ConfigWin):
         super(ConfigWin, self).__init__()
         self.setupUi(self)
         self.configbox.itemClicked.connect(self.onItemClicked)
+        self.configbox.itemDoubleClicked.connect(self.useConfig)
         self.newConfigBtn.clicked.connect(self.newConfig)
         self.renameConfigBtn.clicked.connect(self.renameConfig)
         self.delConfigBtn.clicked.connect(self.delConfig)
@@ -189,16 +190,22 @@ class ConfigWin(QtWidgets.QDialog, ConfigDesigner.Ui_ConfigWin):
     def renameConfig(self):
         rename = RenameWin(initName=self.configbox.selectedItems()[0].text(0))
         if rename.exec_():
-            try:
-                self.newName = os.path.abspath(os.path.join(os.path.dirname(
-                    "__file__"),  'config')) + "\\" + rename.text + ".ini"
-                current = os.path.abspath(os.path.join(os.path.dirname(
-                    "__file__"),  'config')) + "\\" + self.configbox.selectedItems()[0].text(0) + ".ini"
-                os.rename(current, self.newName)
-                self.populateConfig()
-            except:
-                QtWidgets.QMessageBox.about(
-                    self, "Внимание!", "Файл с таким именем уже существует!")
+            # try:
+            self.newName = os.path.abspath(os.path.join(os.path.dirname(
+                "__file__"),  'config')) + "\\" + rename.text + ".ini"
+            current = os.path.abspath(os.path.join(os.path.dirname(
+                "__file__"),  'config')) + "\\" + self.configbox.selectedItems()[0].text(0) + ".ini"
+            os.rename(current, self.newName)
+            self.populateConfig()
+
+            self.configbox.setCurrentItem(self.configbox.findItems(rename.text, Qt.Qt.MatchExactly)[
+                0])
+            self.configbox.itemClicked.emit(
+                self.configbox.selectedItems()[0], 0)
+
+            # except:
+            #     QtWidgets.QMessageBox.about(
+            #         self, "Внимание!", "Файл с таким именем уже существует!")
 
     def populateConfig(self):
         self.configbox.clear()
