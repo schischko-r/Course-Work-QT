@@ -17,6 +17,12 @@ import csv
 import os
 
 
+def relativePath(folder, name, ftype):
+    path = os.path.abspath(os.path.join(os.path.dirname(
+        "__file__"),  folder) + "\\" + name + ftype)
+    return path
+
+
 class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
     def __init__(self):
         super().__init__()
@@ -60,7 +66,7 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
                 QtWidgets.QMessageBox.about(
                     self, "Внимание!", "Конфигурация не выбрана!")
 
-            self.populateExport()
+        self.populateExport()
 
     def populateExport(self):
         def convert_size(size_bytes):
@@ -118,44 +124,66 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
             self.configFullListbox.resizeColumnToContents(i)
 
     def startParsing(self):
-        print("DEBUG: CONNECTING...")
+        self.maxPage = self.lineEdit.text()
+        if self.maxPage == "":
+            QtWidgets.QMessageBox.about(
+                self, "Внимание!", "Укажите количество страниц!")
+            return
+        try:
+            int(self.maxPage)
+        except:
+            QtWidgets.QMessageBox.about(
+                self, "Внимание!", "Неверное количество!")
+            return
+
+        self.progressBar.setValue(0)
+        self.progressBar.setMaximum(int(self.maxPage)+3)
+        self.progresslbl.setText("Устанавливаю соединение...")
         try:
             r = requests.head("https://vif2ne.org/")
             pass
         except requests.ConnectionError:
             QtWidgets.QMessageBox.about(
                 self, "Внимание!", "Проверьте ваше подключение к интернету и доступность сайта")
+            self.progresslbl.setText("Ошибка при установке соединения!")
             return
-        print("DEBUG: CONNECTION SUCCESSFUL")
+        self.progresslbl.setText("Соединение установлено!")
+        self.progressBar.setValue(self.progressBar.value()+1)
 
         if self.configshow.topLevelItemCount() == 0:
             QtWidgets.QMessageBox.about(
                 self, "Внимание!", "Вы не выбрали конфигурацию!")
             return
-        maxPage = self.lineEdit.text()
-        if maxPage == "":
-            QtWidgets.QMessageBox.about(
-                self, "Внимание!", "Укажите количество страниц!")
+
+        try:
+            config = configparser.ConfigParser()
+            config.read(self.cfgPATH, encoding='utf-8-sig')
+            filename = self.cfgPATH.split("\\")
+            filename = filename[len(filename) - 1].split('.')[0]
+            configDict = config._sections['config']
+            self.ctext, self.ctopic, self.cstrtDate, self.cendDate, self.cauthor, self.cadressed, self.cexpanded = configDict['text'], configDict[
+                'topic'], configDict['fdate'], configDict['tdate'],  configDict['author'],  configDict['receiver'], configDict['expanded']
+
+            self.progresslbl.setText("Конфигурация загружена успешно!")
+            self.progressBar.setValue(self.progressBar.value()+1)
+        except:
+            self.progresslbl.setText("Файл конфигурации поврежден!")
             return
-
-        config = configparser.ConfigParser()
-        config.read(self.cfgPATH, encoding='utf-8-sig')
-        filename = self.cfgPATH.split("\\")
-        filename = filename[len(filename) - 1].split('.')[0]
-        configDict = config._sections['config']
-        self.ctext, self.ctopic, self.cstrtDate, self.cendDate, self.cauthor, self.cadressed, self.cexpanded = configDict['text'], configDict[
-            'topic'], configDict['fdate'], configDict['tdate'],  configDict['author'],  configDict['receiver'], configDict['expanded']
-
-        print("DEBUG: CFG READ SUCCESSFUL")
         self.parser = parserMain.Parser(
-            int(maxPage), self.ctopic, self.ctext, self.cstrtDate, self.cendDate, self.cauthor, self.cadressed, str(self.cexpanded))
+            int(self.maxPage), self.ctopic, self.ctext, self.cstrtDate, self.cendDate, self.cauthor, self.cadressed, str(self.cexpanded))
         self.parser.progress.connect(self.moveprogress)
         self.parser.done.connect(self.complete)
         self.parser.start()
-        print("DEBUG: PARSING STARTED")
+        self.progresslbl.setText("Начинаю парсинг!")
 
     def moveprogress(self, value):
-        print(f"DEBUG: PARSING STAGE {value}")
+        if value <= int(self.maxPage):
+            self.progresslbl.setText(
+                f"Парсинг: страница: {value}/{self.maxPage}")
+            self.progressBar.setValue(self.progressBar.value()+1)
+        else:
+            self.progresslbl.setText(f"Создания файла с данными!")
+            self.progressBar.setValue(self.progressBar.value()+1)
 
     def complete(self, done):
         config = configparser.ConfigParser()
@@ -168,43 +196,54 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         QtWidgets.QMessageBox.about(
             self, "Успешно!", "Парсинг окончен!")
         self.populateExport()
-        print("DEBUG: PARSING COMPLETE")
+        self.progresslbl.setText(f"Ожидание начала парсинга...")
+        self.progressBar.setValue(0)
 
     def deleteExport(self):
-        for item in self.exportbox.selectedItems():
-            filepath = os.path.abspath(os.path.join(os.path.dirname(
-                "__file__"),  'export')) + "\\" + item.text(0) + ".csv"
-            if os.path.exists(filepath):
-                os.remove(filepath)
-            else:
-                print("The file does not exist")
-        self.populateExport()
+        try:
+            for item in self.exportbox.selectedItems():
+                filepath = relativePath('export',  item.text(0), '.csv')
+                if os.path.exists(filepath):
+                    os.remove(filepath)
+                else:
+                    print("The file does not exist")
+            self.populateExport()
+        except:
+            QtWidgets.QMessageBox.about(
+                self, "Внимание!", "Выберите файл!")
 
     def renameExport(self):
-        renameWin = RenameWin(self.exportbox.selectedItems()[0].text(0))
-        if renameWin.exec_():
-            try:
-                self.newName = os.path.abspath(os.path.join(os.path.dirname(
-                    "__file__"),  'export')) + "\\" + renameWin.text + ".csv"
-                current = os.path.abspath(os.path.join(os.path.dirname(
-                    "__file__"),  'export')) + "\\" + self.exportbox.selectedItems()[0].text(0) + ".csv"
-                os.rename(current, self.newName)
-                self.populateExport()
-                self.previewShowbox.clear()
-            except:
-                QtWidgets.QMessageBox.about(
-                    self, "Внимание!", "Некорректное имя!")
+        try:
+            renameWin = RenameWin(self.exportbox.selectedItems()[0].text(0))
+            if renameWin.exec_():
+                try:
+                    self.newName = relativePath(
+                        'export',  renameWin.text, '.csv')
+                    current = relativePath(
+                        'export',  self.exportbox.selectedItems()[0].text(0), '.csv')
+                    os.rename(current, self.newName)
+                    self.populateExport()
+                    self.previewShowbox.clear()
+                except:
+                    QtWidgets.QMessageBox.about(
+                        self, "Внимание!", "Некорректное имя!")
+        except:
+            QtWidgets.QMessageBox.about(
+                self, "Внимание!", "Выберите файл!")
 
     def openPreview(self):
-        previewWin = PreviewWin(os.path.abspath(os.path.join(os.path.dirname(
-            "__file__"),  'export')) + "\\" + self.exportbox.selectedItems()[0].text(0) + ".csv")
-        if previewWin.exec_():
-            pass
+        try:
+            previewWin = PreviewWin(relativePath(
+                'export',  self.exportbox.selectedItems()[0].text(0), '.csv'))
+            if previewWin.exec_():
+                pass
+        except:
+            QtWidgets.QMessageBox.about(
+                self, "Внимание!", "Выберите файл!")
 
     def preview(self, it, colf):
         self.previewShowbox.clear()
-        filepath = os.path.abspath(os.path.join(os.path.dirname(
-            "__file__"), 'export')) + "\\" + str(it.text(0)) + ".csv"
+        filepath = relativePath('export',  it.text(0), '.csv')
         with open(filepath, encoding='utf-8-sig') as f:
             reader = csv.DictReader(f, delimiter=',')
             for row in reader:
@@ -216,8 +255,7 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
             self.previewShowbox.resizeColumnToContents(i)
 
     def loadfromHst(self, it, col):
-        self.cfgPATH = os.path.abspath(os.path.join(os.path.dirname(
-            "__file__"), 'config')) + "\\" + str(it.text(0)) + ".ini"
+        self.cfgPATH = relativePath('config',  it.text(0), '.ini')
         try:
             with open(self.cfgPATH, encoding='utf-8-sig') as f:
                 lines = f.readlines()
@@ -234,6 +272,7 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
                     values = (cfgtitle, cfgvalue)
                     for i in range(len(values)):
                         item.setText(i, values[i])
+                        item.setTextAlignment(i, 4)
             for i in range(self.configshow.columnCount()):
                 self.configshow.resizeColumnToContents(i)
             self.guidelbl.setText("Выбрано успешно!")

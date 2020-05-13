@@ -11,6 +11,11 @@ import glob
 import os
 
 
+def relativePath(folder, name, ftype):
+    return os.path.abspath(os.path.join(os.path.dirname(
+        "__file__"),  folder)) + "\\" + name + ftype
+
+
 class ConfigWin(QtWidgets.QDialog, ConfigDesigner.Ui_ConfigWin):
     def __init__(self, parent=None):
         super(ConfigWin, self).__init__()
@@ -22,6 +27,10 @@ class ConfigWin(QtWidgets.QDialog, ConfigDesigner.Ui_ConfigWin):
         self.delConfigBtn.clicked.connect(self.delConfig)
         self.useConfigBtn.clicked.connect(self.useConfig)
 
+        self.nameEntry.returnPressed.connect(self.useConfig)
+        self.textEntry.returnPressed.connect(self.useConfig)
+        self.authorEntry.returnPressed.connect(self.useConfig)
+        self.receiverEntry.returnPressed.connect(self.useConfig)
         self.populateConfig()
 
     def onItemClicked(self, it, col):
@@ -83,27 +92,21 @@ class ConfigWin(QtWidgets.QDialog, ConfigDesigner.Ui_ConfigWin):
             os.path.dirname("__file__"), 'config'))
         if not os.path.exists(path):
             os.makedirs(path)
+            print("DEBUG: CFG FOLDER CREATED")
 
-        name = "".join(x for x in self.nameEntry.text() if x.isalnum())
-        try:
-            if len(name) == 0:
-                QtWidgets.QMessageBox.about(
-                    self, "Ошибка!", "Некорректное имя!")
-                return
-            path = os.path.abspath(os.path.join(
-                os.path.dirname("__file__"), 'config'))
-            f = open(path + '\\' + name + '.ini')
-        except:
+        self.name = "".join(x for x in self.nameEntry.text()
+                            if x.isalnum() or x == " ")
+        if len(self.name) == 0:
+            QtWidgets.QMessageBox.about(
+                self, "Ошибка!", "Некорректное имя!")
+            return
+
+        MsgBox = QtWidgets.QMessageBox.question(self,
+                                                'Выбрана конфигурация', f'Вы уверены, что хотите выбрать конфигурацию "{self.name}"', QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+        if MsgBox == QtWidgets.QMessageBox.Yes:
             pass
         else:
-            f.close()
-            MsgBox = QtWidgets.QMessageBox.question(self,
-                                                    'Выбрана конфигурация', f'Вы уверены, что хотите выбрать конфигурацию "{name}"', QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
-            if MsgBox == QtWidgets.QMessageBox.Yes:
-                self.savedflag = 1
-                pass
-            else:
-                return
+            return
 
         text = self.textEntry.text()
         author = self.authorEntry.text()
@@ -134,30 +137,31 @@ class ConfigWin(QtWidgets.QDialog, ConfigDesigner.Ui_ConfigWin):
 
         path = os.path.abspath(os.path.join(
             os.path.dirname("__file__"), 'config'))
-        with open(path + '\\' + name + '.ini', 'w', encoding="utf-8-sig") as configfile:
+        with open(path + '\\' + self.name + '.ini', 'w', encoding="utf-8-sig") as configfile:
             config.write(configfile)
 
         try:
             path = os.path.abspath(os.path.join(
                 os.path.dirname("__file__"), 'config'))
-            f = open(path + "\\" + name + '.ini')
+            f = open(path + "\\" + self.name + '.ini')
         except IOError:
             QtWidgets.QMessageBox.about(
-                self, "Ошибка!", "Что-то пошло не так!")
+                self, "Ошибка!", "Некорректное имя!")
+            return
         else:
             f.close()
             QtWidgets.QMessageBox.about(
-                self, "Вы выбрали конфигурацию", f'Выбрана конфигурация "{name}"!')
+                self, "Вы выбрали конфигурацию", f'Выбрана конфигурация "{self.name}"!')
             self.savedflag = 1
+            print("DEBUG: CFG SAVED")
             self.populateConfig()
 
     def useConfig(self):
         self.saveConfig()
         if self.savedflag == 1:
-
             try:
-                self.PATH = os.path.abspath(os.path.join(os.path.dirname(
-                    "__file__"), 'config')) + "\\" + str(self.nameEntry.text()) + ".ini"
+                self.PATH = relativePath(
+                    'config',  self.name, '.ini')
                 self.accept()
                 self.close()
             except:
@@ -177,8 +181,7 @@ class ConfigWin(QtWidgets.QDialog, ConfigDesigner.Ui_ConfigWin):
         else:
             return
 
-        filepath = os.path.abspath(os.path.join(os.path.dirname(
-            "__file__"), 'config')) + "\\" + self.selectedCfg + ".ini"
+        filepath = relativePath('config',  self.selectedCfg, '.ini')
 
         if os.path.exists(filepath):
             os.remove(filepath)
@@ -190,22 +193,25 @@ class ConfigWin(QtWidgets.QDialog, ConfigDesigner.Ui_ConfigWin):
     def renameConfig(self):
         rename = RenameWin(initName=self.configbox.selectedItems()[0].text(0))
         if rename.exec_():
-            # try:
-            self.newName = os.path.abspath(os.path.join(os.path.dirname(
-                "__file__"),  'config')) + "\\" + rename.text + ".ini"
-            current = os.path.abspath(os.path.join(os.path.dirname(
-                "__file__"),  'config')) + "\\" + self.configbox.selectedItems()[0].text(0) + ".ini"
-            os.rename(current, self.newName)
-            self.populateConfig()
+            try:
+                self.renameWintxt = "".join(
+                    x for x in rename.text if x.isalnum() or x == " ")
+                self.newName = relativePath(
+                    'config', self.renameWintxt, '.ini')
+                current = relativePath(
+                    'config',  self.configbox.selectedItems()[0].text(0), '.ini')
 
-            self.configbox.setCurrentItem(self.configbox.findItems(rename.text, Qt.Qt.MatchExactly)[
-                0])
-            self.configbox.itemClicked.emit(
-                self.configbox.selectedItems()[0], 0)
+                os.rename(current, self.newName)
+                self.populateConfig()
 
-            # except:
-            #     QtWidgets.QMessageBox.about(
-            #         self, "Внимание!", "Файл с таким именем уже существует!")
+                self.configbox.setCurrentItem(self.configbox.findItems(self.renameWintxt, Qt.Qt.MatchExactly)[
+                    0])
+                self.configbox.itemClicked.emit(
+                    self.configbox.selectedItems()[0], 0)
+
+            except:
+                QtWidgets.QMessageBox.about(
+                    self, "Внимание!", "Файл с таким именем уже существует!")
 
     def populateConfig(self):
         self.configbox.clear()
@@ -226,3 +232,5 @@ class ConfigWin(QtWidgets.QDialog, ConfigDesigner.Ui_ConfigWin):
                       configDict['tdate'],  configDict['author'],  configDict['receiver'], configDict['expanded'])
             for i in range(len(values)):
                 item.setText(i, values[i])
+        for i in range(self.configbox.columnCount()):
+            self.configbox.resizeColumnToContents(i)

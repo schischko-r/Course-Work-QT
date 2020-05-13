@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import urllib.parse
-from tkinter import messagebox
 
 HOST = 'https://vif2ne.org/nvk/forum/'                       # ХОСТ
 LIST = '0/index/list?text='                                  # ЛИСТ
