@@ -230,6 +230,7 @@ class Ui_MainWindow(object):
         self.exportbox.setGeometry(QtCore.QRect(14, 45, 649, 271))
         self.exportbox.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.exportbox.setDragEnabled(True)
+        self.exportbox.setSelectionMode(QtWidgets.QAbstractItemView.ContiguousSelection)
         self.exportbox.setIndentation(25)
         self.exportbox.setObjectName("exportbox")
         self.exportbox.header().setVisible(True)

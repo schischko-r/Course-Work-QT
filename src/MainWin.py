@@ -36,6 +36,7 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         self.expandedBtn.clicked.connect(self.openPreview)
 
         self.exportbox.itemClicked.connect(self.preview)
+        self.exportbox.itemDoubleClicked.connect(self.openPreview)
         self.configFullListbox.itemClicked.connect(self.loadfromHst)
 
     def openmanager(self):
@@ -208,6 +209,7 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
                 else:
                     print("The file does not exist")
             self.populateExport()
+            self.previewShowbox.clear()
         except:
             QtWidgets.QMessageBox.about(
                 self, "Внимание!", "Выберите файл!")

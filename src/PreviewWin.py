@@ -4,6 +4,7 @@ from PyQt5 import Qt
 from designer import PreviewDesigner
 
 import csv
+import subprocess
 
 
 class PreviewWin(QtWidgets.QDialog, PreviewDesigner.Ui_Dialog):
@@ -12,6 +13,8 @@ class PreviewWin(QtWidgets.QDialog, PreviewDesigner.Ui_Dialog):
         self.setupUi(self)
         self.initName = initName
         self.populateExport()
+        self.treeWidget.itemClicked.connect(self.onItemClicked)
+        self.tableWidget.itemDoubleClicked.connect(self.copy)
 
     def populateExport(self):
         with open(self.initName, encoding='utf-8-sig') as f:
@@ -32,3 +35,18 @@ class PreviewWin(QtWidgets.QDialog, PreviewDesigner.Ui_Dialog):
                         item.setText(i, values[i])
         for i in range(self.treeWidget.columnCount()):
             self.treeWidget.resizeColumnToContents(i)
+
+    def onItemClicked(self, it, col):
+        self.tableWidget.clearContents()
+        for i in range(self.tableWidget.rowCount() + 1):
+            self.tableWidget.setItem(
+                i, 0, QtWidgets.QTableWidgetItem(it.text(i)))
+
+        self.tableWidget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
+
+    def copy(self, it):
+        cb = QtWidgets.QApplication.clipboard()
+        cb.clear(mode=cb.Clipboard)
+        cb.setText(it.text(), mode=cb.Clipboard)
+        QtWidgets.QMessageBox.about(
+            self, "Скопировано!", "Скопировано в буфер обмена!")

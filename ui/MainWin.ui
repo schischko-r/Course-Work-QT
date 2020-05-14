@@ -660,6 +660,9 @@ color: rgb(255, 255, 255)</string>
      <property name="dragEnabled">
       <bool>true</bool>
      </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::MultiSelection</enum>
+     </property>
      <property name="indentation">
       <number>25</number>
      </property>

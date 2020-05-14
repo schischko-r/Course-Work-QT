@@ -55,11 +55,11 @@ class Parser(QtCore.QThread):
                 break
 
         records = list(itertools.chain.from_iterable(records))
-        self.listToSCV(records, self.expanded)
+        self.listToCSV(records, self.expanded)
         self.progress.emit(page + 1)
         self.done.emit(1)
 
-    def listToSCV(self, records, expanded):
+    def listToCSV(self, records, expanded):
         if expanded == "False":
             df = pd.DataFrame(records, columns=[
                 'name', 'msg', 'time', 'link', 'length'])
