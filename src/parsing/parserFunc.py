@@ -1,21 +1,6 @@
 from bs4 import BeautifulSoup
 import urllib.parse
 
-HOST = 'https://vif2ne.org/nvk/forum/'                       # ХОСТ
-LIST = '0/index/list?text='                                  # ЛИСТ
-TOPIC = '&topic='                                            # Рубрика
-FDAY = '&fday='                                              # НАЧАЛЬНЫЙ ДЕНЬ
-FMONTH = '&fmonth='                                          # НАЧАЛЬНЫЙ МЕСЯЦ
-FYEAR = '&fyear='                                            # НАЧАЛЬНЫЙ ГОД
-TDAY = '&tday='                                              # КОНЕЧНЫЙ ДЕНЬ
-TMONTH = '&tmonth='                                          # КОНЕЧНЫЙ МЕСЯЦ
-TYEAR = '&tyear='                                            # КОНЕЧНЫЙ ГОД
-AUTHOR = '&author='                                          # АВТОР
-TOAUTHOR = '&toauthor='                                      # АДРЕСАТ
-FROM = '&from='                                              # ПЕРВАЯ СТРАНИЦА
-TO = '&to='                                                  # ПОСЛЕДНЯЯ СТРАНИЦА
-WIDE = '&wide='
-
 
 def load_url(page, text, topic, strtDate, endDate, author, adressed, expanded, session):
     [fday, fmonth, fyear] = strtDate.split("-")
@@ -33,13 +18,9 @@ def load_url(page, text, topic, strtDate, endDate, author, adressed, expanded, s
     adressed = encodestr(adressed)
     if expanded != "False":
         expanded = "on"
-        url = HOST + LIST + text + TOPIC + topic + FDAY + fday + FMONTH + fmonth + FYEAR + fyear + TDAY \
-            + tday + TMONTH + tmonth + TYEAR + tyear + WIDE + expanded + AUTHOR + author + TOAUTHOR + adressed \
-            + FROM + str(strtdoc) + TO + str(enddoc)
+        url = f"https://vif2ne.org/nvk/forum/0/index/list?text={text}&topic={topic}&fday={fday}&fmonth={fmonth}&fyear={fyear}&tday={tday}&tmonth={tmonth}&tyear={tyear}&wide={expanded}&author={author}&toauthor={adressed}&from={str(strtdoc)}&to={str(enddoc)}"
     else:
-        url = HOST + LIST + text + TOPIC + topic + FDAY + fday + FMONTH + fmonth + FYEAR + fyear + TDAY \
-            + tday + TMONTH + tmonth + TYEAR + tyear + AUTHOR + author + TOAUTHOR + adressed \
-            + FROM + str(strtdoc) + TO + str(enddoc)
+        url = f"https://vif2ne.org/nvk/forum/0/index/list?text={text}&topic={topic}&fday={fday}&fmonth={fmonth}&fyear={fyear}&tday={tday}&tmonth={tmonth}&tyear={tyear}&author={author}&toauthor={adressed}&from={str(strtdoc)}&to={str(enddoc)}"
 
     request = session.get(url)
     return request.text
@@ -57,11 +38,11 @@ def contain_forum_data(text):
 def getData(tables):
     parsed = []
 
-    iter = 0
+    i = 0
     for table_i in tables:
         try:
-            iter += 1
-            if iter % 2 != 0:
+            i += 1
+            if i % 2 != 0:
                 dateTime = table_i.find('td').text
                 textlink = HOST + table_i.find('a')['href'][3:]
                 textlen = table_i.find_all('td')[1].text[6:]
@@ -82,7 +63,7 @@ def getData(tables):
 
 def getMsg(expMsg):
     parsed = []
-
+    i = 0
     for table_i in expMsg:
         try:
             try:
@@ -92,18 +73,19 @@ def getMsg(expMsg):
             except:
                 pass
             else:
-                iter = 0
-            iter += 1
-            if iter % 3 == 0:
+                i = 0
+            i += 1
+            if i % 3 == 0:
                 expanded = table_i.text
                 tmpdict3 = {'expmsg': expanded}
 
                 tmpdict = {**tmpdict1, **tmpdict2, **tmpdict3}
                 parsed.append(tmpdict)
                 tmpdict = {}
-            if iter % 2 == 0:
+            if i % 2 == 0:
                 dateTime = table_i.find('td').text
-                textlink = HOST + table_i.find('a')['href'][3:]
+                textlink = "https://vif2ne.org/nvk/forum/" + \
+                    table_i.find('a')['href'][3:]
                 textlen = table_i.find_all('td')[1].text[6:]
 
                 tmpdict2 = {'time': dateTime,
