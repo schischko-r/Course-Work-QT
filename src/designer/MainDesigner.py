@@ -161,12 +161,22 @@ class Ui_MainWindow(object):
         self.progressBar.setAlignment(QtCore.Qt.AlignCenter)
         self.progressBar.setObjectName("progressBar")
         self.label_6 = QtWidgets.QLabel(self.menu)
-        self.label_6.setGeometry(QtCore.QRect(17, 40, 253, 239))
+        self.label_6.setGeometry(QtCore.QRect(17, 100, 253, 239))
         self.label_6.setText("")
-        self.label_6.setPixmap(QtGui.QPixmap("../ico/badge.png"))
+        self.label_6.setPixmap(QtGui.QPixmap("./ico/badge.png"))
         self.label_6.setScaledContents(True)
         self.label_6.setWordWrap(False)
         self.label_6.setObjectName("label_6")
+        self.openSettings = QtWidgets.QPushButton(self.menu)
+        self.openSettings.setGeometry(QtCore.QRect(17, 30, 253, 51))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(9)
+        self.openSettings.setFont(font)
+        self.openSettings.setStyleSheet("background-color: rgb(103, 169, 237);\n"
+"color: rgb(255, 255, 255)")
+        self.openSettings.setFlat(False)
+        self.openSettings.setObjectName("openSettings")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
         self.tabWidget.setGeometry(QtCore.QRect(287, 0, 1145, 882))
         self.tabWidget.setStyleSheet("background-color: rgb(229, 240, 249);")
@@ -312,12 +322,13 @@ class Ui_MainWindow(object):
         self.exportbox.header().setVisible(False)
         self.exportbox.header().setCascadingSectionResizes(False)
         self.exportbox.header().setDefaultSectionSize(200)
+        self.exportbox.header().setHighlightSections(False)
         self.exportbox.header().setMinimumSectionSize(150)
         self.tabWidget.addTab(self.main, "")
         self.manager = QtWidgets.QWidget()
         self.manager.setObjectName("manager")
         self.frame_2 = QtWidgets.QFrame(self.manager)
-        self.frame_2.setGeometry(QtCore.QRect(0, 0, 1140, 462))
+        self.frame_2.setGeometry(QtCore.QRect(10, 0, 1120, 462))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         self.frame_2.setFont(font)
@@ -619,7 +630,7 @@ class Ui_MainWindow(object):
         self.tdayMenu.addItem("")
         self.tdayMenu.addItem("")
         self.frame_3 = QtWidgets.QFrame(self.frame_2)
-        self.frame_3.setGeometry(QtCore.QRect(0, 398, 1140, 63))
+        self.frame_3.setGeometry(QtCore.QRect(0, 398, 1120, 63))
         self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_3.setObjectName("frame_3")
@@ -732,10 +743,141 @@ class Ui_MainWindow(object):
         self.tableWidget.verticalHeader().setDefaultSectionSize(40)
         self.tableWidget.verticalHeader().setStretchLastSection(True)
         self.tabWidget.addTab(self.tab, "")
+        self.settings = QtWidgets.QWidget()
+        self.settings.setObjectName("settings")
+        self.frame_5 = QtWidgets.QFrame(self.settings)
+        self.frame_5.setGeometry(QtCore.QRect(20, 20, 1100, 802))
+        self.frame_5.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border: 2px solid rgb(177, 206, 240);")
+        self.frame_5.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_5.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_5.setObjectName("frame_5")
+        self.label_18 = QtWidgets.QLabel(self.frame_5)
+        self.label_18.setGeometry(QtCore.QRect(520, 40, 111, 30))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(12)
+        self.label_18.setFont(font)
+        self.label_18.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(255, 255, 255);")
+        self.label_18.setObjectName("label_18")
+        self.dateCheck = QtWidgets.QRadioButton(self.frame_5)
+        self.dateCheck.setGeometry(QtCore.QRect(780, 300, 211, 31))
+        self.dateCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(255, 255, 255);\n"
+"font: 10pt \"Segoe UI\";\n"
+"")
+        self.dateCheck.setObjectName("dateCheck")
+        self.buttonGroup = QtWidgets.QButtonGroup(MainWindow)
+        self.buttonGroup.setObjectName("buttonGroup")
+        self.buttonGroup.addButton(self.dateCheck)
+        self.cfgCheck = QtWidgets.QRadioButton(self.frame_5)
+        self.cfgCheck.setGeometry(QtCore.QRect(780, 240, 251, 31))
+        self.cfgCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(255, 255, 255);\n"
+"font: 10pt \"Segoe UI\";\n"
+"")
+        self.cfgCheck.setChecked(True)
+        self.cfgCheck.setObjectName("cfgCheck")
+        self.buttonGroup.addButton(self.cfgCheck)
+        self.label_17 = QtWidgets.QLabel(self.frame_5)
+        self.label_17.setGeometry(QtCore.QRect(730, 170, 231, 51))
+        self.label_17.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(255, 255, 255);\n"
+"font: 10pt \"Segoe UI\";\n"
+"")
+        self.label_17.setWordWrap(True)
+        self.label_17.setObjectName("label_17")
+        self.label_19 = QtWidgets.QLabel(self.frame_5)
+        self.label_19.setGeometry(QtCore.QRect(60, 170, 201, 41))
+        self.label_19.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(255, 255, 255);\n"
+"font: 10pt \"Segoe UI\";\n"
+"")
+        self.label_19.setObjectName("label_19")
+        self.saveStgCheck = QtWidgets.QCheckBox(self.frame_5)
+        self.saveStgCheck.setGeometry(QtCore.QRect(110, 230, 461, 51))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.saveStgCheck.setFont(font)
+        self.saveStgCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(255, 255, 255);\n"
+"font: 10pt \"Segoe UI\";\n"
+"")
+        self.saveStgCheck.setChecked(True)
+        self.saveStgCheck.setAutoRepeat(False)
+        self.saveStgCheck.setAutoExclusive(False)
+        self.saveStgCheck.setObjectName("saveStgCheck")
+        self.loadStgCheck = QtWidgets.QCheckBox(self.frame_5)
+        self.loadStgCheck.setGeometry(QtCore.QRect(110, 300, 461, 51))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.loadStgCheck.setFont(font)
+        self.loadStgCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(255, 255, 255);\n"
+"font: 10pt \"Segoe UI\";\n"
+"")
+        self.loadStgCheck.setChecked(True)
+        self.loadStgCheck.setAutoRepeat(False)
+        self.loadStgCheck.setAutoExclusive(False)
+        self.loadStgCheck.setObjectName("loadStgCheck")
+        self.exitCheck = QtWidgets.QCheckBox(self.frame_5)
+        self.exitCheck.setGeometry(QtCore.QRect(110, 420, 461, 51))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.exitCheck.setFont(font)
+        self.exitCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(255, 255, 255);\n"
+"font: 10pt \"Segoe UI\";\n"
+"")
+        self.exitCheck.setChecked(True)
+        self.exitCheck.setAutoRepeat(False)
+        self.exitCheck.setAutoExclusive(False)
+        self.exitCheck.setObjectName("exitCheck")
+        self.exactTime = QtWidgets.QRadioButton(self.frame_5)
+        self.exactTime.setGeometry(QtCore.QRect(780, 540, 251, 31))
+        self.exactTime.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(255, 255, 255);\n"
+"font: 10pt \"Segoe UI\";\n"
+"")
+        self.exactTime.setObjectName("exactTime")
+        self.buttonGroup_2 = QtWidgets.QButtonGroup(MainWindow)
+        self.buttonGroup_2.setObjectName("buttonGroup_2")
+        self.buttonGroup_2.addButton(self.exactTime)
+        self.relativetime = QtWidgets.QRadioButton(self.frame_5)
+        self.relativetime.setGeometry(QtCore.QRect(780, 480, 251, 31))
+        self.relativetime.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(255, 255, 255);\n"
+"font: 10pt \"Segoe UI\";\n"
+"")
+        self.relativetime.setChecked(True)
+        self.relativetime.setObjectName("relativetime")
+        self.buttonGroup_2.addButton(self.relativetime)
+        self.label_20 = QtWidgets.QLabel(self.frame_5)
+        self.label_20.setGeometry(QtCore.QRect(730, 410, 251, 51))
+        self.label_20.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(255, 255, 255);\n"
+"font: 10pt \"Segoe UI\";\n"
+"")
+        self.label_20.setWordWrap(True)
+        self.label_20.setObjectName("label_20")
+        self.tabWidget.addTab(self.settings, "")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -746,6 +888,7 @@ class Ui_MainWindow(object):
         self.label_5.setText(_translate("MainWindow", "Количество страниц:\n"
 "(1 страница ≈ 100 запросов)"))
         self.progresslbl.setText(_translate("MainWindow", "Выберите конфигурацию!"))
+        self.openSettings.setText(_translate("MainWindow", "Открыть настройки приложения"))
         self.configshow.setSortingEnabled(True)
         self.configshow.headerItem().setText(0, _translate("MainWindow", "Ключ"))
         self.configshow.headerItem().setText(1, _translate("MainWindow", "Значение"))
@@ -1011,3 +1154,15 @@ class Ui_MainWindow(object):
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Значение"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Расширенный предпросмотр"))
+        self.label_18.setText(_translate("MainWindow", "Настройки"))
+        self.dateCheck.setText(_translate("MainWindow", "Текущую дату и время"))
+        self.cfgCheck.setText(_translate("MainWindow", "Текущую конфигурацию"))
+        self.label_17.setText(_translate("MainWindow", "Указывать в названии экспортированного файла"))
+        self.label_19.setText(_translate("MainWindow", "Настройки приложения"))
+        self.saveStgCheck.setText(_translate("MainWindow", "Сохранять настройки при выходе"))
+        self.loadStgCheck.setText(_translate("MainWindow", "Загружать настройки при входе"))
+        self.exitCheck.setText(_translate("MainWindow", "Предупреждать о выходе из приложения"))
+        self.exactTime.setText(_translate("MainWindow", "Конкретное время"))
+        self.relativetime.setText(_translate("MainWindow", "Относительное время"))
+        self.label_20.setText(_translate("MainWindow", "В списке всех конфигураций показывать"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.settings), _translate("MainWindow", "Настройки"))

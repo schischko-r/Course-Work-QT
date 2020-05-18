@@ -3,16 +3,26 @@ from bs4 import BeautifulSoup
 import datetime
 from parsing import parserFunc as p
 from PyQt5 import QtCore
+import os
 import itertools
 import pandas as pd
+
+
+def relativePath(folder, name="", ftype=""):
+    # ФУНКЦИЯ ВОЗВРАЩАЕТ ОТНОСИТЕЛЬНЫЙ ПУТЬ К ФАЙЛУ ИЛИ ПАПКЕ
+    path = os.path.abspath(os.path.join(os.path.dirname(
+        "__file__"),  folder) + "\\" + name + ftype)
+    return path
 
 
 class Parser(QtCore.QThread):
     progress = QtCore.pyqtSignal(int)
     done = QtCore.pyqtSignal(int)
 
-    def __init__(self, maxPage, topic, text, strtDate, endDate, author, adressed, expanded):
+    def __init__(self, filename, maxPage, topic, text, strtDate, endDate, author, adressed, expanded, EXPORTCFGNAME):
         QtCore.QThread.__init__(self)
+
+        self.filename = filename
         self.maxPage = maxPage
         self.topic = topic
         self.text = text
@@ -21,6 +31,7 @@ class Parser(QtCore.QThread):
         self.author = author
         self.adressed = adressed
         self.expanded = expanded
+        self.EXPORTCFGNAME = EXPORTCFGNAME
 
     def __del__(self):
         self.wait()
@@ -60,19 +71,30 @@ class Parser(QtCore.QThread):
         self.done.emit(1)
 
     def listToCSV(self, records, expanded):
+        if self.EXPORTCFGNAME == False:
+            csv_name = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        else:
+            i = 0
+            if os.path.exists(relativePath('export', self.filename, ".csv")):
+                i += 1
+            while os.path.exists(relativePath('export', f"{self.filename} ({i})", ".csv")):
+                i += 1
+            if i != 0:
+                csv_name = f"{self.filename} ({i})"
+            else:
+                csv_name = self.filename
+
         if expanded == "False":
             df = pd.DataFrame(records, columns=[
                 'name', 'msg', 'time', 'link', 'length'])
             df['time'] = pd.to_datetime(df['time'])
 
-            scv_name = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-            df.to_csv('./export/' + scv_name + '.csv',
+            df.to_csv(relativePath('export', csv_name, ".csv"),
                       index=False, encoding='utf-8-sig')
         else:
             df = pd.DataFrame(records, columns=[
                 'name', 'msg', 'time', 'link', 'length', 'expmsg'])
             df['time'] = pd.to_datetime(df['time'])
 
-            scv_name = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-            df.to_csv('./export/' + scv_name + '.csv',
+            df.to_csv(relativePath('export', csv_name, ".csv"),
                       index=False, encoding='utf-8-sig')

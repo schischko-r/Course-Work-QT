@@ -11,6 +11,7 @@ import os
 
 
 def main():
+    # ЗАПУСК ОСНОВНОГО ОКНА
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
     window.show()
