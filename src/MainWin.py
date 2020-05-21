@@ -1,4 +1,5 @@
 import sys
+import PyQt5
 from PyQt5 import QtWidgets, Qt, QtCore
 
 from designer import MainDesigner
@@ -18,7 +19,7 @@ import os
 def relativePath(folder, name="", ftype=""):
     # ФУНКЦИЯ ВОЗВРАЩАЕТ ОТНОСИТЕЛЬНЫЙ ПУТЬ К ФАЙЛУ ИЛИ ПАПКЕ
     path = os.path.abspath(os.path.join(os.path.dirname(
-        "__file__"),  folder) + "\\" + name + ftype)
+        os.getcwd()),  folder) + "\\" + name + ftype)
     return path
 
 
@@ -292,6 +293,7 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         # ВОЗВРАЩАЕТ В ИСХОДНОЕ ПОЛОЖЕНИЕ ЛЕЙБЛ И ПРОГРЕССБАР
         self.progresslbl.setText(f"Ожидание начала парсинга...")
         self.progressBar.setValue(0)
+        self.parser.stop()
 
     def deleteExport(self):
         # ОТВЕЧАЕТ ЗА УДАЛЕНИЕ ФАЙЛА ЭКСПОРТА
@@ -654,53 +656,56 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
 
     def closeEvent(self, event):
 
-        MsgBox = QtWidgets.QMessageBox.question(self,
-                                                'Завершение работы', 'Вы уверены, что хотите выйти?', QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
-        if MsgBox == QtWidgets.QMessageBox.Yes:
-            try:
-                if self.saveStgCheck.isChecked():
+        if self.exitCheck.isChecked():
+            MsgBox = QtWidgets.QMessageBox.question(self,
+                                                    'Завершение работы', 'Вы уверены, что хотите выйти?', QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+            if MsgBox == QtWidgets.QMessageBox.Yes:
+                pass
+            else:
+                event.ignore()
+                return
+        try:
+            if self.saveStgCheck.isChecked():
 
-                    if self.loadStgCheck.isChecked():
-                        loadStg = 'True'
-                    else:
-                        loadStg = 'False'
-
-                    if self.exitCheck.isChecked():
-                        exitApp = 'True'
-                    else:
-                        exitApp = 'False'
-
-                    if self.cfgCheck.isChecked():
-                        cfgName = 'True'
-                    else:
-                        cfgName = 'False'
-
-                    if self.relativetime.isChecked():
-                        relativetime = 'True'
-                    else:
-                        relativetime = 'False'
-
-                    settings = configparser.ConfigParser()
-                    settings['settings'] = {'saveStg': 'True', 'loadStg': loadStg,
-                                            'exitApp': exitApp, 'cfgName': cfgName, 'relativeTime': relativetime}
-
-                    with open('settings.ini', 'w', encoding="utf-8-sig") as configfile:
-                        settings.write(configfile)
+                if self.loadStgCheck.isChecked():
+                    loadStg = 'True'
                 else:
-                    settings = configparser.ConfigParser()
-                    settings.read('settings.ini', encoding='utf-8-sig')
-                    configDict = settings._sections['settings']
-                    loadStg, saveCfg, exitApp, relativetime, cfgName = configDict['loadStg'], configDict['saveCfg'], \
-                        configDict['exitApp'],  configDict['relativetime'], configDict['cfgName']
+                    loadStg = 'False'
 
-                    settings['settings'] = {'saveStg': 'False', 'loadStg': loadStg,
-                                            'exitApp': exitApp, 'cfgName': cfgName, 'relativeTime': relativetime}
+                if self.exitCheck.isChecked():
+                    exitApp = 'True'
+                else:
+                    exitApp = 'False'
 
-                    with open('settings.ini', 'w', encoding="utf-8-sig") as configfile:
-                        settings.write(configfile)
-            except:
-                QtWidgets.QMessageBox.about(
-                    self, "Ошибка!", "Ошибка при сохранении настроек!")
-            event.accept()
-        else:
-            event.ignore()
+                if self.cfgCheck.isChecked():
+                    cfgName = 'True'
+                else:
+                    cfgName = 'False'
+
+                if self.relativetime.isChecked():
+                    relativetime = 'True'
+                else:
+                    relativetime = 'False'
+
+                settings = configparser.ConfigParser()
+                settings['settings'] = {'saveStg': 'True', 'loadStg': loadStg,
+                                        'exitApp': exitApp, 'cfgName': cfgName, 'relativeTime': relativetime}
+
+                with open('settings.ini', 'w', encoding="utf-8-sig") as configfile:
+                    settings.write(configfile)
+            else:
+                settings = configparser.ConfigParser()
+                settings.read('settings.ini', encoding='utf-8-sig')
+                configDict = settings._sections['settings']
+                loadStg, exitApp, relativetime, cfgName = configDict['loadStg'], \
+                    configDict['exitApp'],  configDict['relativetime'], configDict['cfgName']
+
+                settings['settings'] = {'saveStg': 'False', 'loadStg': loadStg,
+                                        'exitApp': exitApp, 'cfgName': cfgName, 'relativeTime': relativetime}
+
+                with open('settings.ini', 'w', encoding="utf-8-sig") as configfile:
+                    settings.write(configfile)
+        except:
+            QtWidgets.QMessageBox.about(
+                self, "Ошибка!", "Ошибка при сохранении настроек!")
+        event.accept()

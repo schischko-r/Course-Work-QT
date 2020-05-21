@@ -14,10 +14,12 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1427, 882)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setMinimumSize(QtCore.QSize(1427, 882))
         MainWindow.setMaximumSize(QtCore.QSize(1427, 882))
@@ -96,7 +98,7 @@ class Ui_MainWindow(object):
         self.menu.setPalette(palette)
         self.menu.setAutoFillBackground(False)
         self.menu.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border: 2px solid rgb(177, 206, 240);")
+                                "border: 2px solid rgb(177, 206, 240);")
         self.menu.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.menu.setFrameShadow(QtWidgets.QFrame.Raised)
         self.menu.setObjectName("menu")
@@ -127,7 +129,7 @@ class Ui_MainWindow(object):
         font.setPointSize(9)
         self.startBtn.setFont(font)
         self.startBtn.setStyleSheet("background-color: rgb(103, 169, 237);\n"
-"color: rgb(255, 255, 255)")
+                                    "color: rgb(255, 255, 255)")
         self.startBtn.setObjectName("startBtn")
         self.label_5 = QtWidgets.QLabel(self.menubase)
         self.label_5.setGeometry(QtCore.QRect(20, 70, 211, 51))
@@ -153,7 +155,8 @@ class Ui_MainWindow(object):
         font.setPointSize(8)
         self.progresslbl.setFont(font)
         self.progresslbl.setStyleSheet("border-color: rgb(255, 255, 255);")
-        self.progresslbl.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.progresslbl.setAlignment(
+            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.progresslbl.setObjectName("progresslbl")
         self.progressBar = QtWidgets.QProgressBar(self.guidefrm_2)
         self.progressBar.setGeometry(QtCore.QRect(24, 30, 205, 32))
@@ -163,7 +166,7 @@ class Ui_MainWindow(object):
         self.label_6 = QtWidgets.QLabel(self.menu)
         self.label_6.setGeometry(QtCore.QRect(17, 100, 253, 239))
         self.label_6.setText("")
-        self.label_6.setPixmap(QtGui.QPixmap("./ico/badge.png"))
+        self.label_6.setPixmap(QtGui.QPixmap("../ico/badge.png"))
         self.label_6.setScaledContents(True)
         self.label_6.setWordWrap(False)
         self.label_6.setObjectName("label_6")
@@ -174,7 +177,7 @@ class Ui_MainWindow(object):
         font.setPointSize(9)
         self.openSettings.setFont(font)
         self.openSettings.setStyleSheet("background-color: rgb(103, 169, 237);\n"
-"color: rgb(255, 255, 255)")
+                                        "color: rgb(255, 255, 255)")
         self.openSettings.setFlat(False)
         self.openSettings.setObjectName("openSettings")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
@@ -187,7 +190,7 @@ class Ui_MainWindow(object):
         self.configfrm = QtWidgets.QFrame(self.main)
         self.configfrm.setGeometry(QtCore.QRect(38, 40, 353, 305))
         self.configfrm.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border: 2px solid rgb(177, 206, 240);")
+                                     "border: 2px solid rgb(177, 206, 240);")
         self.configfrm.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.configfrm.setFrameShadow(QtWidgets.QFrame.Raised)
         self.configfrm.setObjectName("configfrm")
@@ -207,8 +210,8 @@ class Ui_MainWindow(object):
         self.previewfrm = QtWidgets.QFrame(self.main)
         self.previewfrm.setGeometry(QtCore.QRect(424, 40, 681, 385))
         self.previewfrm.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border: 2px solid rgb(177, 206, 240);\n"
-"")
+                                      "border: 2px solid rgb(177, 206, 240);\n"
+                                      "")
         self.previewfrm.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.previewfrm.setFrameShadow(QtWidgets.QFrame.Raised)
         self.previewfrm.setObjectName("previewfrm")
@@ -219,7 +222,7 @@ class Ui_MainWindow(object):
         font.setPointSize(10)
         self.label_2.setFont(font)
         self.label_2.setStyleSheet("border-color: rgb(255, 255, 255);\n"
-"")
+                                   "")
         self.label_2.setObjectName("label_2")
         self.frame = QtWidgets.QFrame(self.previewfrm)
         self.frame.setGeometry(QtCore.QRect(14, 336, 649, 35))
@@ -234,11 +237,12 @@ class Ui_MainWindow(object):
         font.setPointSize(7)
         self.expandedBtn.setFont(font)
         self.expandedBtn.setStyleSheet("background-color: rgb(103, 169, 237);\n"
-"color: rgb(255, 255, 255)")
+                                       "color: rgb(255, 255, 255)")
         self.expandedBtn.setObjectName("expandedBtn")
         self.previewShowbox = QtWidgets.QTreeWidget(self.previewfrm)
         self.previewShowbox.setGeometry(QtCore.QRect(14, 45, 649, 293))
-        self.previewShowbox.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.previewShowbox.setVerticalScrollBarPolicy(
+            QtCore.Qt.ScrollBarAlwaysOn)
         self.previewShowbox.setDragEnabled(True)
         self.previewShowbox.setObjectName("previewShowbox")
         self.previewShowbox.header().setDefaultSectionSize(200)
@@ -246,8 +250,8 @@ class Ui_MainWindow(object):
         self.configFullListfrm = QtWidgets.QFrame(self.main)
         self.configFullListfrm.setGeometry(QtCore.QRect(40, 379, 353, 463))
         self.configFullListfrm.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border: 2px solid rgb(177, 206, 240);\n"
-"")
+                                             "border: 2px solid rgb(177, 206, 240);\n"
+                                             "")
         self.configFullListfrm.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.configFullListfrm.setFrameShadow(QtWidgets.QFrame.Raised)
         self.configFullListfrm.setObjectName("configFullListfrm")
@@ -271,12 +275,12 @@ class Ui_MainWindow(object):
         font.setPointSize(7)
         self.managerBtn.setFont(font)
         self.managerBtn.setStyleSheet("background-color: rgb(103, 169, 237);\n"
-"color: rgb(255, 255, 255)")
+                                      "color: rgb(255, 255, 255)")
         self.managerBtn.setObjectName("managerBtn")
         self.exportfrm = QtWidgets.QFrame(self.main)
         self.exportfrm.setGeometry(QtCore.QRect(424, 471, 681, 367))
         self.exportfrm.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border: 2px solid rgb(177, 206, 240);")
+                                     "border: 2px solid rgb(177, 206, 240);")
         self.exportfrm.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.exportfrm.setFrameShadow(QtWidgets.QFrame.Raised)
         self.exportfrm.setObjectName("exportfrm")
@@ -293,7 +297,7 @@ class Ui_MainWindow(object):
         font.setPointSize(7)
         self.renameBtn.setFont(font)
         self.renameBtn.setStyleSheet("background-color: rgb(103, 169, 237);\n"
-"color: rgb(255, 255, 255)")
+                                     "color: rgb(255, 255, 255)")
         self.renameBtn.setObjectName("renameBtn")
         self.deleteBtn = QtWidgets.QPushButton(self.buttonfrm)
         self.deleteBtn.setGeometry(QtCore.QRect(348, 7, 75, 22))
@@ -302,7 +306,7 @@ class Ui_MainWindow(object):
         font.setPointSize(7)
         self.deleteBtn.setFont(font)
         self.deleteBtn.setStyleSheet("background-color: rgb(103, 169, 237);\n"
-"color: rgb(255, 255, 255)")
+                                     "color: rgb(255, 255, 255)")
         self.deleteBtn.setObjectName("deleteBtn")
         self.label = QtWidgets.QLabel(self.exportfrm)
         self.label.setGeometry(QtCore.QRect(14, 10, 351, 31))
@@ -316,7 +320,8 @@ class Ui_MainWindow(object):
         self.exportbox.setGeometry(QtCore.QRect(14, 45, 649, 271))
         self.exportbox.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.exportbox.setDragEnabled(True)
-        self.exportbox.setSelectionMode(QtWidgets.QAbstractItemView.ContiguousSelection)
+        self.exportbox.setSelectionMode(
+            QtWidgets.QAbstractItemView.ContiguousSelection)
         self.exportbox.setIndentation(25)
         self.exportbox.setObjectName("exportbox")
         self.exportbox.header().setVisible(False)
@@ -333,7 +338,7 @@ class Ui_MainWindow(object):
         font.setFamily("Segoe UI")
         self.frame_2.setFont(font)
         self.frame_2.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border: 2px solid rgb(177, 206, 240);")
+                                   "border: 2px solid rgb(177, 206, 240);")
         self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
@@ -344,7 +349,7 @@ class Ui_MainWindow(object):
         font.setPointSize(11)
         self.label_7.setFont(font)
         self.label_7.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);")
+                                   "border-color: rgb(255, 255, 255);")
         self.label_7.setObjectName("label_7")
         self.textEntry = QtWidgets.QLineEdit(self.frame_2)
         self.textEntry.setGeometry(QtCore.QRect(469, 150, 621, 34))
@@ -360,7 +365,8 @@ class Ui_MainWindow(object):
         self.authorEntry.setObjectName("authorEntry")
         self.receiverEntry = QtWidgets.QLineEdit(self.frame_2)
         self.receiverEntry.setGeometry(QtCore.QRect(650, 288, 440, 30))
-        self.receiverEntry.setStyleSheet("background-color: rgb(229, 240, 249);")
+        self.receiverEntry.setStyleSheet(
+            "background-color: rgb(229, 240, 249);")
         self.receiverEntry.setObjectName("receiverEntry")
         self.label_8 = QtWidgets.QLabel(self.frame_2)
         self.label_8.setGeometry(QtCore.QRect(462, 20, 216, 30))
@@ -369,7 +375,7 @@ class Ui_MainWindow(object):
         font.setPointSize(10)
         self.label_8.setFont(font)
         self.label_8.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);")
+                                   "border-color: rgb(255, 255, 255);")
         self.label_8.setObjectName("label_8")
         self.label_9 = QtWidgets.QLabel(self.frame_2)
         self.label_9.setGeometry(QtCore.QRect(50, 115, 61, 20))
@@ -378,7 +384,7 @@ class Ui_MainWindow(object):
         font.setPointSize(8)
         self.label_9.setFont(font)
         self.label_9.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);")
+                                   "border-color: rgb(255, 255, 255);")
         self.label_9.setObjectName("label_9")
         self.topicbox = QtWidgets.QListWidget(self.frame_2)
         self.topicbox.setGeometry(QtCore.QRect(50, 148, 201, 222))
@@ -453,7 +459,7 @@ class Ui_MainWindow(object):
         font.setPointSize(8)
         self.label_10.setFont(font)
         self.label_10.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);")
+                                    "border-color: rgb(255, 255, 255);")
         self.label_10.setObjectName("label_10")
         self.label_11 = QtWidgets.QLabel(self.frame_2)
         self.label_11.setGeometry(QtCore.QRect(266, 235, 31, 20))
@@ -462,7 +468,7 @@ class Ui_MainWindow(object):
         font.setPointSize(8)
         self.label_11.setFont(font)
         self.label_11.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);")
+                                    "border-color: rgb(255, 255, 255);")
         self.label_11.setObjectName("label_11")
         self.label_12 = QtWidgets.QLabel(self.frame_2)
         self.label_12.setGeometry(QtCore.QRect(266, 288, 31, 20))
@@ -471,7 +477,7 @@ class Ui_MainWindow(object):
         font.setPointSize(8)
         self.label_12.setFont(font)
         self.label_12.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);")
+                                    "border-color: rgb(255, 255, 255);")
         self.label_12.setObjectName("label_12")
         self.label_13 = QtWidgets.QLabel(self.frame_2)
         self.label_13.setGeometry(QtCore.QRect(575, 235, 61, 20))
@@ -480,7 +486,7 @@ class Ui_MainWindow(object):
         font.setPointSize(8)
         self.label_13.setFont(font)
         self.label_13.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);")
+                                    "border-color: rgb(255, 255, 255);")
         self.label_13.setObjectName("label_13")
         self.label_14 = QtWidgets.QLabel(self.frame_2)
         self.label_14.setGeometry(QtCore.QRect(575, 288, 70, 20))
@@ -489,7 +495,7 @@ class Ui_MainWindow(object):
         font.setPointSize(8)
         self.label_14.setFont(font)
         self.label_14.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);")
+                                    "border-color: rgb(255, 255, 255);")
         self.label_14.setObjectName("label_14")
         self.fdayMenu = QtWidgets.QComboBox(self.frame_2)
         self.fdayMenu.setGeometry(QtCore.QRect(300, 235, 50, 30))
@@ -553,7 +559,7 @@ class Ui_MainWindow(object):
         self.checkBox = QtWidgets.QCheckBox(self.frame_2)
         self.checkBox.setGeometry(QtCore.QRect(300, 350, 205, 18))
         self.checkBox.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);")
+                                    "border-color: rgb(255, 255, 255);")
         self.checkBox.setObjectName("checkBox")
         self.fyearMenu = QtWidgets.QComboBox(self.frame_2)
         self.fyearMenu.setGeometry(QtCore.QRect(435, 235, 70, 30))
@@ -637,22 +643,22 @@ class Ui_MainWindow(object):
         self.newConfigBtn = QtWidgets.QPushButton(self.frame_3)
         self.newConfigBtn.setGeometry(QtCore.QRect(50, 15, 200, 32))
         self.newConfigBtn.setStyleSheet("background-color: rgb(103, 169, 237);\n"
-"color: rgb(255, 255, 255)")
+                                        "color: rgb(255, 255, 255)")
         self.newConfigBtn.setObjectName("newConfigBtn")
         self.renameConfigBtn = QtWidgets.QPushButton(self.frame_3)
         self.renameConfigBtn.setGeometry(QtCore.QRect(340, 15, 200, 32))
         self.renameConfigBtn.setStyleSheet("background-color: rgb(103, 169, 237);\n"
-"color: rgb(255, 255, 255)")
+                                           "color: rgb(255, 255, 255)")
         self.renameConfigBtn.setObjectName("renameConfigBtn")
         self.delConfigBtn = QtWidgets.QPushButton(self.frame_3)
         self.delConfigBtn.setGeometry(QtCore.QRect(620, 15, 200, 32))
         self.delConfigBtn.setStyleSheet("background-color: rgb(103, 169, 237);\n"
-"color: rgb(255, 255, 255)")
+                                        "color: rgb(255, 255, 255)")
         self.delConfigBtn.setObjectName("delConfigBtn")
         self.useConfigBtn = QtWidgets.QPushButton(self.frame_3)
         self.useConfigBtn.setGeometry(QtCore.QRect(890, 15, 200, 32))
         self.useConfigBtn.setStyleSheet("background-color: rgb(103, 169, 237);\n"
-"color: rgb(255, 255, 255)")
+                                        "color: rgb(255, 255, 255)")
         self.useConfigBtn.setObjectName("useConfigBtn")
         self.tmonthMenu = QtWidgets.QComboBox(self.frame_2)
         self.tmonthMenu.setGeometry(QtCore.QRect(365, 288, 60, 30))
@@ -672,14 +678,13 @@ class Ui_MainWindow(object):
         self.frame_4 = QtWidgets.QFrame(self.manager)
         self.frame_4.setGeometry(QtCore.QRect(20, 460, 1100, 372))
         self.frame_4.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border: 2px solid rgb(177, 206, 240);")
+                                   "border: 2px solid rgb(177, 206, 240);")
         self.frame_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_4.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_4.setObjectName("frame_4")
         self.configbox = QtWidgets.QTreeWidget(self.frame_4)
         self.configbox.setGeometry(QtCore.QRect(30, 47, 1040, 295))
         self.configbox.setObjectName("configbox")
-        item_0 = QtWidgets.QTreeWidgetItem(self.configbox)
         self.label_15 = QtWidgets.QLabel(self.frame_4)
         self.label_15.setGeometry(QtCore.QRect(30, 13, 111, 20))
         font = QtGui.QFont()
@@ -687,7 +692,7 @@ class Ui_MainWindow(object):
         font.setPointSize(8)
         self.label_15.setFont(font)
         self.label_15.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);")
+                                    "border-color: rgb(255, 255, 255);")
         self.label_15.setObjectName("label_15")
         self.tabWidget.addTab(self.manager, "")
         self.tab = QtWidgets.QWidget()
@@ -695,14 +700,14 @@ class Ui_MainWindow(object):
         self.frame_6 = QtWidgets.QFrame(self.tab)
         self.frame_6.setGeometry(QtCore.QRect(20, 20, 1100, 802))
         self.frame_6.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border: 2px solid rgb(177, 206, 240);")
+                                   "border: 2px solid rgb(177, 206, 240);")
         self.frame_6.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_6.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_6.setObjectName("frame_6")
         self.treeWidget = QtWidgets.QTreeWidget(self.frame_6)
         self.treeWidget.setGeometry(QtCore.QRect(20, 60, 1050, 396))
         self.treeWidget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"")
+                                      "")
         self.treeWidget.setObjectName("treeWidget")
         self.treeWidget.header().setDefaultSectionSize(160)
         self.treeWidget.header().setMinimumSectionSize(40)
@@ -714,7 +719,7 @@ class Ui_MainWindow(object):
         font.setPointSize(10)
         self.label_16.setFont(font)
         self.label_16.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);")
+                                    "border-color: rgb(255, 255, 255);")
         self.label_16.setObjectName("label_16")
         self.tableWidget = QtWidgets.QTableWidget(self.frame_6)
         self.tableWidget.setGeometry(QtCore.QRect(19, 457, 1061, 331))
@@ -748,7 +753,7 @@ class Ui_MainWindow(object):
         self.frame_5 = QtWidgets.QFrame(self.settings)
         self.frame_5.setGeometry(QtCore.QRect(20, 20, 1100, 802))
         self.frame_5.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border: 2px solid rgb(177, 206, 240);")
+                                   "border: 2px solid rgb(177, 206, 240);")
         self.frame_5.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_5.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_5.setObjectName("frame_5")
@@ -759,14 +764,14 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.label_18.setFont(font)
         self.label_18.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);")
+                                    "border-color: rgb(255, 255, 255);")
         self.label_18.setObjectName("label_18")
         self.dateCheck = QtWidgets.QRadioButton(self.frame_5)
         self.dateCheck.setGeometry(QtCore.QRect(780, 300, 211, 31))
         self.dateCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);\n"
-"font: 10pt \"Segoe UI\";\n"
-"")
+                                     "border-color: rgb(255, 255, 255);\n"
+                                     "font: 10pt \"Segoe UI\";\n"
+                                     "")
         self.dateCheck.setObjectName("dateCheck")
         self.buttonGroup = QtWidgets.QButtonGroup(MainWindow)
         self.buttonGroup.setObjectName("buttonGroup")
@@ -774,26 +779,26 @@ class Ui_MainWindow(object):
         self.cfgCheck = QtWidgets.QRadioButton(self.frame_5)
         self.cfgCheck.setGeometry(QtCore.QRect(780, 240, 251, 31))
         self.cfgCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);\n"
-"font: 10pt \"Segoe UI\";\n"
-"")
+                                    "border-color: rgb(255, 255, 255);\n"
+                                    "font: 10pt \"Segoe UI\";\n"
+                                    "")
         self.cfgCheck.setChecked(True)
         self.cfgCheck.setObjectName("cfgCheck")
         self.buttonGroup.addButton(self.cfgCheck)
         self.label_17 = QtWidgets.QLabel(self.frame_5)
         self.label_17.setGeometry(QtCore.QRect(730, 170, 231, 51))
         self.label_17.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);\n"
-"font: 10pt \"Segoe UI\";\n"
-"")
+                                    "border-color: rgb(255, 255, 255);\n"
+                                    "font: 10pt \"Segoe UI\";\n"
+                                    "")
         self.label_17.setWordWrap(True)
         self.label_17.setObjectName("label_17")
         self.label_19 = QtWidgets.QLabel(self.frame_5)
         self.label_19.setGeometry(QtCore.QRect(60, 170, 201, 41))
         self.label_19.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);\n"
-"font: 10pt \"Segoe UI\";\n"
-"")
+                                    "border-color: rgb(255, 255, 255);\n"
+                                    "font: 10pt \"Segoe UI\";\n"
+                                    "")
         self.label_19.setObjectName("label_19")
         self.saveStgCheck = QtWidgets.QCheckBox(self.frame_5)
         self.saveStgCheck.setGeometry(QtCore.QRect(110, 230, 461, 51))
@@ -805,9 +810,9 @@ class Ui_MainWindow(object):
         font.setWeight(50)
         self.saveStgCheck.setFont(font)
         self.saveStgCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);\n"
-"font: 10pt \"Segoe UI\";\n"
-"")
+                                        "border-color: rgb(255, 255, 255);\n"
+                                        "font: 10pt \"Segoe UI\";\n"
+                                        "")
         self.saveStgCheck.setChecked(True)
         self.saveStgCheck.setAutoRepeat(False)
         self.saveStgCheck.setAutoExclusive(False)
@@ -822,9 +827,9 @@ class Ui_MainWindow(object):
         font.setWeight(50)
         self.loadStgCheck.setFont(font)
         self.loadStgCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);\n"
-"font: 10pt \"Segoe UI\";\n"
-"")
+                                        "border-color: rgb(255, 255, 255);\n"
+                                        "font: 10pt \"Segoe UI\";\n"
+                                        "")
         self.loadStgCheck.setChecked(True)
         self.loadStgCheck.setAutoRepeat(False)
         self.loadStgCheck.setAutoExclusive(False)
@@ -839,9 +844,9 @@ class Ui_MainWindow(object):
         font.setWeight(50)
         self.exitCheck.setFont(font)
         self.exitCheck.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);\n"
-"font: 10pt \"Segoe UI\";\n"
-"")
+                                     "border-color: rgb(255, 255, 255);\n"
+                                     "font: 10pt \"Segoe UI\";\n"
+                                     "")
         self.exitCheck.setChecked(True)
         self.exitCheck.setAutoRepeat(False)
         self.exitCheck.setAutoExclusive(False)
@@ -849,9 +854,9 @@ class Ui_MainWindow(object):
         self.exactTime = QtWidgets.QRadioButton(self.frame_5)
         self.exactTime.setGeometry(QtCore.QRect(780, 540, 251, 31))
         self.exactTime.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);\n"
-"font: 10pt \"Segoe UI\";\n"
-"")
+                                     "border-color: rgb(255, 255, 255);\n"
+                                     "font: 10pt \"Segoe UI\";\n"
+                                     "")
         self.exactTime.setObjectName("exactTime")
         self.buttonGroup_2 = QtWidgets.QButtonGroup(MainWindow)
         self.buttonGroup_2.setObjectName("buttonGroup_2")
@@ -859,18 +864,18 @@ class Ui_MainWindow(object):
         self.relativetime = QtWidgets.QRadioButton(self.frame_5)
         self.relativetime.setGeometry(QtCore.QRect(780, 480, 251, 31))
         self.relativetime.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);\n"
-"font: 10pt \"Segoe UI\";\n"
-"")
+                                        "border-color: rgb(255, 255, 255);\n"
+                                        "font: 10pt \"Segoe UI\";\n"
+                                        "")
         self.relativetime.setChecked(True)
         self.relativetime.setObjectName("relativetime")
         self.buttonGroup_2.addButton(self.relativetime)
         self.label_20 = QtWidgets.QLabel(self.frame_5)
         self.label_20.setGeometry(QtCore.QRect(730, 410, 251, 51))
         self.label_20.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-color: rgb(255, 255, 255);\n"
-"font: 10pt \"Segoe UI\";\n"
-"")
+                                    "border-color: rgb(255, 255, 255);\n"
+                                    "font: 10pt \"Segoe UI\";\n"
+                                    "")
         self.label_20.setWordWrap(True)
         self.label_20.setObjectName("label_20")
         self.tabWidget.addTab(self.settings, "")
@@ -883,27 +888,35 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.guidelbl.setText(_translate("MainWindow", "Выберите конфигурацию!"))
+        self.guidelbl.setText(_translate(
+            "MainWindow", "Выберите конфигурацию!"))
         self.startBtn.setText(_translate("MainWindow", "Начать парсинг"))
         self.label_5.setText(_translate("MainWindow", "Количество страниц:\n"
-"(1 страница ≈ 100 запросов)"))
-        self.progresslbl.setText(_translate("MainWindow", "Выберите конфигурацию!"))
-        self.openSettings.setText(_translate("MainWindow", "Открыть настройки приложения"))
+                                        "(1 страница ≈ 100 запросов)"))
+        self.progresslbl.setText(_translate(
+            "MainWindow", "Выберите конфигурацию!"))
+        self.openSettings.setText(_translate(
+            "MainWindow", "Открыть настройки приложения"))
         self.configshow.setSortingEnabled(True)
         self.configshow.headerItem().setText(0, _translate("MainWindow", "Ключ"))
         self.configshow.headerItem().setText(1, _translate("MainWindow", "Значение"))
         self.label_3.setText(_translate("MainWindow", "Конфигурация:"))
         self.label_2.setText(_translate("MainWindow", "Предпросмотр:"))
-        self.expandedBtn.setText(_translate("MainWindow", "Расширенный предпросмотр"))
+        self.expandedBtn.setText(_translate(
+            "MainWindow", "Расширенный предпросмотр"))
         self.previewShowbox.setSortingEnabled(True)
-        self.previewShowbox.headerItem().setText(0, _translate("MainWindow", "Пользователь"))
-        self.previewShowbox.headerItem().setText(1, _translate("MainWindow", "Сообщение"))
+        self.previewShowbox.headerItem().setText(
+            0, _translate("MainWindow", "Пользователь"))
+        self.previewShowbox.headerItem().setText(
+            1, _translate("MainWindow", "Сообщение"))
         self.previewShowbox.headerItem().setText(2, _translate("MainWindow", "Время"))
         self.configFullListbox.setSortingEnabled(True)
         self.configFullListbox.headerItem().setText(0, _translate("MainWindow", "Имя"))
-        self.configFullListbox.headerItem().setText(1, _translate("MainWindow", "Последний парсинг"))
+        self.configFullListbox.headerItem().setText(
+            1, _translate("MainWindow", "Последний парсинг"))
         self.label_4.setText(_translate("MainWindow", "История:"))
-        self.managerBtn.setText(_translate("MainWindow", "Открыть менеджер конфигураций"))
+        self.managerBtn.setText(_translate(
+            "MainWindow", "Открыть менеджер конфигураций"))
         self.renameBtn.setText(_translate("MainWindow", "Переименовать"))
         self.deleteBtn.setText(_translate("MainWindow", "Удалить"))
         self.label.setText(_translate("MainWindow", "Экспортированные файлы:"))
@@ -911,9 +924,11 @@ class Ui_MainWindow(object):
         self.exportbox.headerItem().setText(0, _translate("MainWindow", "Имя"))
         self.exportbox.headerItem().setText(1, _translate("MainWindow", "Кол-во записей"))
         self.exportbox.headerItem().setText(2, _translate("MainWindow", "Размер файла"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.main), _translate("MainWindow", "Основное окно"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(
+            self.main), _translate("MainWindow", "Основное окно"))
         self.label_7.setText(_translate("MainWindow", "Текст содержит слова:"))
-        self.label_8.setText(_translate("MainWindow", "Название конфигурации:"))
+        self.label_8.setText(_translate(
+            "MainWindow", "Название конфигурации:"))
         self.label_9.setText(_translate("MainWindow", "Рубрики:"))
         __sortingEnabled = self.topicbox.isSortingEnabled()
         self.topicbox.setSortingEnabled(False)
@@ -1130,14 +1145,17 @@ class Ui_MainWindow(object):
         self.configbox.setSortingEnabled(False)
         self.configbox.setSortingEnabled(__sortingEnabled)
         self.label_15.setText(_translate("MainWindow", "Конфигурации:"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.manager), _translate("MainWindow", "Менеджер конфигураций"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(
+            self.manager), _translate("MainWindow", "Менеджер конфигураций"))
         self.treeWidget.setSortingEnabled(True)
         self.treeWidget.headerItem().setText(0, _translate("MainWindow", "Пользователь"))
         self.treeWidget.headerItem().setText(1, _translate("MainWindow", "Сообщение"))
         self.treeWidget.headerItem().setText(2, _translate("MainWindow", "Время"))
         self.treeWidget.headerItem().setText(3, _translate("MainWindow", "Ссылка"))
-        self.treeWidget.headerItem().setText(4, _translate("MainWindow", "Длина сообщения"))
-        self.treeWidget.headerItem().setText(5, _translate("MainWindow", "Развернутый вид"))
+        self.treeWidget.headerItem().setText(
+            4, _translate("MainWindow", "Длина сообщения"))
+        self.treeWidget.headerItem().setText(
+            5, _translate("MainWindow", "Развернутый вид"))
         self.label_16.setText(_translate("MainWindow", "Выберите файл!"))
         item = self.tableWidget.verticalHeaderItem(0)
         item.setText(_translate("MainWindow", "Пользователь"))
@@ -1153,16 +1171,26 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "Развернутый вид"))
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Значение"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Расширенный предпросмотр"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(
+            self.tab), _translate("MainWindow", "Расширенный предпросмотр"))
         self.label_18.setText(_translate("MainWindow", "Настройки"))
-        self.dateCheck.setText(_translate("MainWindow", "Текущую дату и время"))
+        self.dateCheck.setText(_translate(
+            "MainWindow", "Текущую дату и время"))
         self.cfgCheck.setText(_translate("MainWindow", "Текущую конфигурацию"))
-        self.label_17.setText(_translate("MainWindow", "Указывать в названии экспортированного файла"))
+        self.label_17.setText(_translate(
+            "MainWindow", "Указывать в названии экспортированного файла"))
         self.label_19.setText(_translate("MainWindow", "Настройки приложения"))
-        self.saveStgCheck.setText(_translate("MainWindow", "Сохранять настройки при выходе"))
-        self.loadStgCheck.setText(_translate("MainWindow", "Загружать настройки при входе"))
-        self.exitCheck.setText(_translate("MainWindow", "Предупреждать о выходе из приложения"))
+        self.saveStgCheck.setText(_translate(
+            "MainWindow", "Сохранять настройки при выходе"))
+        self.loadStgCheck.setText(_translate(
+            "MainWindow", "Загружать настройки при входе"))
+        self.exitCheck.setText(_translate(
+            "MainWindow", "Предупреждать о выходе из приложения"))
         self.exactTime.setText(_translate("MainWindow", "Конкретное время"))
-        self.relativetime.setText(_translate("MainWindow", "Относительное время"))
-        self.label_20.setText(_translate("MainWindow", "В списке всех конфигураций показывать"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.settings), _translate("MainWindow", "Настройки"))
+        self.relativetime.setText(_translate(
+            "MainWindow", "Относительное время"))
+        self.label_20.setText(_translate(
+            "MainWindow", "В списке всех конфигураций показывать"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(
+            self.settings), _translate("MainWindow", "Настройки"))
+        self.tyearMenu.setCurrentIndex(20)

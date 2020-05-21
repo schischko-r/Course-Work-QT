@@ -11,7 +11,7 @@ import pandas as pd
 def relativePath(folder, name="", ftype=""):
     # ФУНКЦИЯ ВОЗВРАЩАЕТ ОТНОСИТЕЛЬНЫЙ ПУТЬ К ФАЙЛУ ИЛИ ПАПКЕ
     path = os.path.abspath(os.path.join(os.path.dirname(
-        "__file__"),  folder) + "\\" + name + ftype)
+        os.getcwd()),  folder) + "\\" + name + ftype)
     return path
 
 
@@ -33,8 +33,8 @@ class Parser(QtCore.QThread):
         self.expanded = expanded
         self.EXPORTCFGNAME = EXPORTCFGNAME
 
-    def __del__(self):
-        self.wait()
+    def stop(self):
+        self.terminate()
 
     def run(self):
 
