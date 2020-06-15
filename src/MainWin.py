@@ -19,7 +19,7 @@ import os
 def relativePath(folder, name="", ftype=""):
     # ФУНКЦИЯ ВОЗВРАЩАЕТ ОТНОСИТЕЛЬНЫЙ ПУТЬ К ФАЙЛУ ИЛИ ПАПКЕ
     path = os.path.abspath(os.path.join(os.path.dirname(
-        os.getcwd()),  folder) + "\\" + name + ftype)
+        "__file__"),  folder) + "\\" + name + ftype)
     return path
 
 
@@ -65,8 +65,8 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         self.loadSettings()
         # ФУНКЦИИ ГЛАВНОГО ОКНА
         self.tabWidget.setCurrentIndex(0)
-        self.managerBtn.clicked.connect(self.openmanager)
         self.startBtn.clicked.connect(self.startParsing)
+        self.openManagerBtn.clicked.connect(self.openmanager)
 
         self.deleteBtn.clicked.connect(self.deleteExport)
         self.renameBtn.clicked.connect(self.renameExport)
@@ -74,7 +74,6 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
 
         self.exportbox.itemClicked.connect(self.preview)
         self.exportbox.itemDoubleClicked.connect(self.openPreview)
-        self.configFullListbox.itemClicked.connect(self.loadfromHst)
         self.openSettings.clicked.connect(self.openPreferences)
 
         # ФУНКЦИИ ОКНА КОНФИГУРАЦИИ
@@ -101,13 +100,12 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         self.treeWidget.itemClicked.connect(self.onItemClicked)
         self.tableWidget.itemDoubleClicked.connect(self.copy)
 
-        # ОБЩИЕ ПЕРЕМЕННЫЕ
-        self.months = {'Янв': 1, 'Фев': 2, 'Мар': 3, 'Апр': 4, 'Май': 5, 'Июн': 6,
-                       'Июл': 7, 'Авг': 8, 'Сен': 9, 'Окт': 10, 'Ноя': 11, 'Дек': 12}
-
         self.updateMain()
+        self.newConfig()
+        
 
     def loadSettings(self):
+        # ЗАГРУЖАЕТ НАСТРОЙКИ
         try:
             settings = configparser.ConfigParser()
             settings.read('settings.ini', encoding='utf-8-sig')
@@ -131,8 +129,9 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
                 self.loadStgCheck.setChecked(False)
         except:
             return
-    # ФУНКЦИИ ГЛАВНОГО ОКНА
 
+
+    # ФУНКЦИИ ГЛАВНОГО ОКНА
     def updateMain(self):
         # ОБНОВЛЯЕТ ФАЙЛЫ ОСНОВНОГО ОКНА
         def convert_size(size_bytes):
@@ -151,8 +150,7 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         path = relativePath("export")
         files = [file for file in glob.glob(path + "**/*.csv")]
         for file in files:
-            filename = file.split("\\")
-            filename = filename[len(filename) - 1].split('.')[0]
+            filename = os.path.basename(file).split(".")[0]
             filesize = convert_size(os.path.getsize(file))
             with open(file,  encoding='utf-8-sig') as f:
                 length = sum(1 for line in f) - 1
@@ -172,7 +170,6 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         # ЗАПОЛНЕНИЕ ДЕРЕВА КОНФИГУРАЦИЙ
         path = relativePath("config")
 
-        self.configFullListbox.clear()
         self.configbox.clear()
 
         files = [file for file in glob.glob(path + "**/*.ini")]
@@ -181,27 +178,18 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
             config.read(file, encoding='utf-8-sig')
             configDict = config._sections['config']
 
-            if self.RELATIVETIME == True:
+            if self.RELATIVETIME:
                 date = deltatime(configDict['last_used'])
             else:
                 date = configDict['last_used']
 
-            filename = file.split("\\")
-            filename = filename[len(filename) - 1].split('.')[0]
-
-            item = QtWidgets.QTreeWidgetItem(self.configFullListbox)
-            values = (filename, date)
-            for i in range(len(values)):
-                item.setText(i, values[i])
+            filename = os.path.basename(file).split(".")[0]
 
             item = QtWidgets.QTreeWidgetItem(self.configbox)
             values = (filename, configDict['text'], configDict['topic'], configDict['fdate'],
-                      configDict['tdate'],  configDict['author'],  configDict['receiver'], configDict['expanded'])
+                      configDict['tdate'],  configDict['author'],  configDict['receiver'], configDict['expanded'], date)
             for i in range(len(values)):
                 item.setText(i, values[i])
-
-        for i in range(self.configFullListbox.columnCount()):
-            self.configFullListbox.resizeColumnToContents(i)
 
         for i in range(self.configbox.columnCount()):
             self.configbox.resizeColumnToContents(i)
@@ -210,6 +198,7 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         # ФУНКЦИЯ НАЧАЛА ПАРСИНГА
         # ПРОВЕРКА ВВОДА КОЛИЧЕСТВА СТРАНИЦ
         self.maxPage = self.lineEdit.text()
+
         if self.maxPage == "":
             QtWidgets.QMessageBox.about(
                 self, "Внимание!", "Укажите количество страниц!")
@@ -222,7 +211,7 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
             return
 
         # ПРОВЕРКА НАЛИЧИЯ КОНФИГУРАЦИИ
-        if self.configshow.topLevelItemCount() == 0:
+        if self.cfgPATH == "":
             QtWidgets.QMessageBox.about(
                 self, "Внимание!", "Вы не выбрали конфигурацию!")
             return
@@ -231,6 +220,7 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         self.progressBar.setValue(0)
         self.progressBar.setMaximum(int(self.maxPage)+3)
         self.progresslbl.setText("Устанавливаю соединение...")
+
         try:
             requests.head("https://vif2ne.org/")
             pass
@@ -239,15 +229,16 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
                 self, "Внимание!", "Проверьте ваше подключение к интернету и доступность сайта")
             self.progresslbl.setText("Ошибка при установке соединения!")
             return
+
         self.progresslbl.setText("Соединение установлено!")
         self.progressBar.setValue(self.progressBar.value()+1)
 
+        self.saveConfig(started = True)
         # СЧИТЫВАНИЕ ФАЙЛА
         try:
             config = configparser.ConfigParser()
             config.read(self.cfgPATH, encoding='utf-8-sig')
-            filename = self.cfgPATH.split("\\")
-            filename = filename[len(filename) - 1].split('.')[0]
+            filename = os.path.basename(self.cfgPATH).split(".")[0]
             configDict = config._sections['config']
             self.ctext, self.ctopic, self.cstrtDate, self.cendDate, self.cauthor, self.cadressed, self.cexpanded = configDict['text'], configDict[
                 'topic'], configDict['fdate'], configDict['tdate'],  configDict['author'],  configDict['receiver'], configDict['expanded']
@@ -258,6 +249,7 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
             QtWidgets.QMessageBox.about(
                 self, "Файл конфигурации поврежден!")
             return
+            
         # ЗАПУСК ТРЕДА ПАРСИНГА
         self.parser = parserMain.Parser(filename,
                                         int(self.maxPage), self.ctopic, self.ctext, self.cstrtDate, self.cendDate, self.cauthor, self.cadressed, str(self.cexpanded), self.EXPORTCFGNAME)
@@ -374,26 +366,18 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         # ЗАГРУЖАЕТ КОНФИГУРАЦИЮ ИЗ ОКНА КОНФИГУРАЦИЙ
         self.cfgPATH = relativePath('config',  it.text(0), '.ini')
         try:
-            with open(self.cfgPATH, encoding='utf-8-sig') as f:
-                lines = f.readlines()
 
-            self.configshow.clear()
-            for line in lines[1:]:
-                if line != "":
-                    cfgtitle = line.split(" = ")[0]
-                    try:
-                        cfgvalue = line.split(" = ")[1]
-                    except:
-                        cfgvalue = ""
-                    item = QtWidgets.QTreeWidgetItem(self.configshow)
-                    values = (cfgtitle, cfgvalue)
-                    for i in range(len(values)):
-                        item.setText(i, values[i])
-                        item.setTextAlignment(i, 4)
-            for i in range(self.configshow.columnCount()):
-                self.configshow.resizeColumnToContents(i)
+            self.configMain.clearContents()
+            self.configMain.setItem(
+                            0, 0, QtWidgets.QTableWidgetItem(it.text(0)))
+            self.configMain.setItem(
+                            1, 0, QtWidgets.QTableWidgetItem(it.text(1)))
+            self.configMain.setItem(
+                            2, 0, QtWidgets.QTableWidgetItem(it.text(5)))
+            self.configMain.setItem(
+                            3, 0, QtWidgets.QTableWidgetItem(it.text(6))) 
+
             self.guidelbl.setText("Выбрано успешно!")
-
         except:
             QtWidgets.QMessageBox.about(
                 self, "Внимание!", "Конфигурация не выбрана!")
@@ -409,50 +393,37 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         items = self.topicbox.findItems(it.text(2), Qt.Qt.MatchExactly)[0]
         self.topicbox.setCurrentRow(self.topicbox.row(items))
 
-        self.fdayMenu.setCurrentIndex(self.fdayMenu.findText(
-            it.text(3).split("-")[0], QtCore.Qt.MatchFixedString))
-        self.fmonthMenu.setCurrentIndex(self.fmonthMenu.findText([key for (key, value) in self.months.items(
-        ) if value == int(it.text(3).split("-")[1])][0], QtCore.Qt.MatchFixedString))
-        self.fyearMenu.setCurrentIndex(self.fyearMenu.findText(
-            it.text(3).split("-")[2], QtCore.Qt.MatchFixedString))
+        self.fdate.setDate(datetime.datetime.strptime(it.text(3), '%d-%m-%Y'))
+        self.tdate.setDate(datetime.datetime.strptime(it.text(4), '%d-%m-%Y'))
 
-        self.tdayMenu.setCurrentIndex(self.tdayMenu.findText(
-            it.text(4).split("-")[0], QtCore.Qt.MatchFixedString))
-        self.tmonthMenu.setCurrentIndex(self.tmonthMenu.findText([key for (key, value) in self.months.items(
-        ) if value == int(it.text(4).split("-")[1])][0], QtCore.Qt.MatchFixedString))
-        self.tyearMenu.setCurrentIndex(self.tyearMenu.findText(
-            it.text(4).split("-")[2], QtCore.Qt.MatchFixedString))
         self.authorEntry.setText(it.text(5))
         self.receiverEntry.setText(it.text(6))
 
-        if (it.text(7)) == "True" and self.checkBox.isChecked() == False:
+        if (it.text(7)) == "True" and not self.checkBox.isChecked():
             self.checkBox.toggle()
-        elif (it.text(7)) == "False" and self.checkBox.isChecked() == True:
+        elif (it.text(7)) == "False" and self.checkBox.isChecked():
             self.checkBox.toggle()
 
         self.loadfromHst(it, col)
 
     def newConfig(self):
         # ОБНУЛЯЕТ ВСЕ ПОЛЯ КОНФИГУРАЦИИ
-        self.nameEntry.setText("")
+        self.cfgPATH = ""
+        self.nameEntry.setText("Новая конфигурация")
         self.textEntry.setText("")
         items = self.topicbox.findItems("Все", Qt.Qt.MatchExactly)[0]
         self.topicbox.setCurrentRow(self.topicbox.row(items))
 
-        self.fdayMenu.setCurrentIndex(0)
-        self.fmonthMenu.setCurrentIndex(0)
-        self.fyearMenu.setCurrentIndex(0)
+        self.fdate.setDate(datetime.datetime.strptime('01-01-2000', '%d-%m-%Y'))
+        self.tdate.setDate(datetime.datetime.today())
 
-        self.tdayMenu.setCurrentIndex(0)
-        self.tmonthMenu.setCurrentIndex(0)
-        self.tyearMenu.setCurrentIndex(20)
         self.authorEntry.setText("")
         self.receiverEntry.setText("")
 
-        if self.checkBox.isChecked() == True:
+        if self.checkBox.isChecked():
             self.checkBox.toggle()
 
-    def saveConfig(self):
+    def saveConfig(self, started = False):
         # СОХРАНЯЕТ КОНФИГУРАЦИЮ
         self.savedflag = 0
         path = relativePath("config")
@@ -460,8 +431,30 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
             os.makedirs(path)
             print("DEBUG: CFG FOLDER CREATED")
 
-        self.name = "".join(x for x in self.nameEntry.text()
-                            if x.isalnum() or x == " ")
+        if not started:
+            self.name = "".join(x for x in self.nameEntry.text()
+                                if x.isalnum() or x == " ")
+            text = self.textEntry.text()
+            author = self.authorEntry.text()
+            receiver = self.receiverEntry.text()
+        else:
+            self.name = "".join(x for x in self.configMain.item(0,0).text() 
+                                if x.isalnum() or x == " ")
+            try:
+                text = self.configMain.item(0,1).text()
+            except:
+                text = "" 
+
+            try:
+                author = self.configMain.item(0,2).text() 
+            except:
+                author = ""
+                
+            try:
+                receiver = self.configMain.item(0,3).text() 
+            except:
+                receiver = ""
+
         if len(self.name) == 0:
             QtWidgets.QMessageBox.about(
                 self, "Ошибка!", "Некорректное имя!")
@@ -474,9 +467,6 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         else:
             return
 
-        text = self.textEntry.text()
-        author = self.authorEntry.text()
-        receiver = self.receiverEntry.text()
         try:
             topic = [item.text() for item in self.topicbox.selectedItems()][0]
         except:
@@ -484,14 +474,11 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         finally:
             pass
 
-        fdate = str(self.fdayMenu.currentText()) + "-" + \
-            str(self.months[str(self.fmonthMenu.currentText())]) + \
-            "-" + str(self.fyearMenu.currentText())
+        fdate = str(self.fdate.date().toString('dd-MM-yyyy'))
 
-        tdate = str(self.tdayMenu.currentText()) + "-" + \
-            str(self.months[str(self.tmonthMenu.currentText())]) + \
-            "-" + str(self.tyearMenu.currentText())
-        if self.checkBox.isChecked() == True:
+        tdate = str(self.tdate.date().toString('dd-MM-yyyy'))
+        
+        if self.checkBox.isChecked():
             expanded = "True"
         else:
             expanded = "False"
@@ -532,21 +519,16 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
                     with open(self.cfgPATH, encoding='utf-8-sig') as f:
                         lines = f.readlines()
 
-                    self.configshow.clear()
-                    for line in lines[1:]:
-                        if line != "":
-                            cfgtitle = line.split(" = ")[0]
-                            try:
-                                cfgvalue = line.split(" = ")[1]
-                            except:
-                                cfgvalue = ""
-                            item = QtWidgets.QTreeWidgetItem(self.configshow)
-                            values = (cfgtitle, cfgvalue)
-                            for i in range(len(values)):
-                                item.setText(i, values[i])
-                                item.setTextAlignment(i, 4)
-                    for i in range(self.configshow.columnCount()):
-                        self.configshow.resizeColumnToContents(i)
+                    self.configMain.clearContents()
+                    self.configMain.setItem(
+                            0, 0, QtWidgets.QTableWidgetItem(os.path.basename(self.cfgPATH).split(".")[0]))
+                    self.configMain.setItem(
+                                    1, 0, QtWidgets.QTableWidgetItem(lines[1].split("= ")[1].replace("\n", "")))
+                    self.configMain.setItem(
+                                    2, 0, QtWidgets.QTableWidgetItem(lines[2].split("= ")[1].replace("\n", "")))
+                    self.configMain.setItem(
+                                    3, 0, QtWidgets.QTableWidgetItem(lines[3].split("= ")[1].replace("\n", "")) )
+
                     self.guidelbl.setText("Выбрано успешно!")
                     f.close()
 

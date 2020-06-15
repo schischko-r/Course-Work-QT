@@ -11,7 +11,7 @@ import pandas as pd
 def relativePath(folder, name="", ftype=""):
     # ФУНКЦИЯ ВОЗВРАЩАЕТ ОТНОСИТЕЛЬНЫЙ ПУТЬ К ФАЙЛУ ИЛИ ПАПКЕ
     path = os.path.abspath(os.path.join(os.path.dirname(
-        os.getcwd()),  folder) + "\\" + name + ftype)
+        "__file__"),  folder) + "\\" + name + ftype)
     return path
 
 
