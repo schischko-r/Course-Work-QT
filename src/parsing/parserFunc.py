@@ -44,7 +44,8 @@ def getData(tables):
             i += 1
             if i % 2 != 0:
                 dateTime = table_i.find('td').text
-                textlink = HOST + table_i.find('a')['href'][3:]
+                textlink = "https://vif2ne.org/nvk/forum/" + \
+                    table_i.find('a')['href'][3:]
                 textlen = table_i.find_all('td')[1].text[6:]
 
                 tmpdict2 = {'time': dateTime,

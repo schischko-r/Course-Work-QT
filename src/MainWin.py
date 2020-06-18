@@ -210,6 +210,8 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
                 self, "Внимание!", "Неверное количество!")
             return
 
+        self.saveConfig(True)
+
         # ПРОВЕРКА НАЛИЧИЯ КОНФИГУРАЦИИ
         if self.cfgPATH == "":
             QtWidgets.QMessageBox.about(
@@ -232,8 +234,6 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
 
         self.progresslbl.setText("Соединение установлено!")
         self.progressBar.setValue(self.progressBar.value()+1)
-
-        self.saveConfig(started = True)
         # СЧИТЫВАНИЕ ФАЙЛА
         try:
             config = configparser.ConfigParser()
@@ -255,7 +255,7 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
                                         int(self.maxPage), self.ctopic, self.ctext, self.cstrtDate, self.cendDate, self.cauthor, self.cadressed, str(self.cexpanded), self.EXPORTCFGNAME)
         self.parser.progress.connect(self.moveprogress)
         self.parser.done.connect(self.complete)
-        self.parser.start()
+        self.parser.run()
         self.progresslbl.setText("Начинаю парсинг!")
 
     def moveprogress(self, value):
@@ -441,17 +441,17 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
             self.name = "".join(x for x in self.configMain.item(0,0).text() 
                                 if x.isalnum() or x == " ")
             try:
-                text = self.configMain.item(0,1).text()
+                text = self.configMain.item(1,0).text()
             except:
                 text = "" 
 
             try:
-                author = self.configMain.item(0,2).text() 
+                author = self.configMain.item(2,0).text() 
             except:
                 author = ""
                 
             try:
-                receiver = self.configMain.item(0,3).text() 
+                receiver = self.configMain.item(3,0).text() 
             except:
                 receiver = ""
 
@@ -488,12 +488,12 @@ class MainWindow(QtWidgets.QMainWindow, MainDesigner.Ui_MainWindow):
         config['config'] = {'text': text, 'author': author,
                             'receiver': receiver, 'topic': topic, 'fdate': fdate, 'tdate': tdate, 'last_used': last_used, 'expanded': expanded}
 
-        path = relativePath("config")
-        with open(path + '\\' + self.name + '.ini', 'w', encoding="utf-8-sig") as configfile:
+        self.cfgPATH = relativePath("config", self.name, ".ini")
+        with open(self.cfgPATH, 'w', encoding="utf-8-sig") as configfile:
             config.write(configfile)
 
         try:
-            f = open(path + "\\" + self.name + '.ini')
+            f = open(self.cfgPATH)
         except IOError:
             QtWidgets.QMessageBox.about(
                 self, "Ошибка!", "Некорректное имя!")
