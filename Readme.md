@@ -1,27 +1,19 @@
-# Про этот проект
+# Forum Parcer
 
-Цель данной работы — создать оконное приложение для парсинга форума. В работе используются запросы через поисковую систему самого форума, после чего полученная выдача обрабатывается через bs4. Оконное приложение написано на QT.
+> Goal: Create a desktop application for parsing a forum. The application uses requests through the forum's search engine, after which the output is processed through bs4. The desktop application is written using QT.
 
-## В работе использовались
-- ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-- ![Qt](https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=white)
+### Project Description:
+- Researching and selecting an appropriate forum to scrape data from.
+- Developing a Python script that will extract the desired data from the forum's search engine.
+- Building the user interface using QT to create an easy-to-use desktop application.
+- Testing the application with different search terms to ensure accurate data extraction and display.
+- Refining the application to optimize its performance and user experience.
 
-## Примеры работы
+### Tools and technologies used:
+- Python, QT, BS4
 
-- Входные параметры:
-```ini
-text = "Буран"
-author = 
-receiver = 
-topic = Все
-fdate = 01-01-2000
-tdate = 17-06-2020
-last_used = 2020-06-17 12:27:01
-expanded = False
-```
-- Выходные параметры:
-```csv
-Mike,"Re: Mike, я especially for you",2000-06-14 23:20:00,https://vif2ne.org/nvk/forum/archive/words/1153?text=,2.50K
-Илья Григоренко,"Ну-с, начнем? : )",2000-06-15 00:33:42,https://vif2ne.org/nvk/forum/archive/words/2309?text=,9.95K
-...
-```
+### Expected outcomes:
+- A functional desktop application for scraping data from online forums.
+- A user-friendly interface for inputting search terms and displaying extracted data.
+- Optimized performance and accuracy of the application.
+- A deeper understanding of Python programming and user interface design.
